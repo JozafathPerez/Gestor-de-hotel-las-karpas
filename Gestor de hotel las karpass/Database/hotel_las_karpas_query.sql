@@ -44,20 +44,20 @@ CREATE TABLE hotel.dbo.Empleados (
 	);
 
 CREATE TABLE hotel.dbo.Clientes (
-	identificacionCliente INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	identificacionCliente INT NOT NULL PRIMARY KEY IDENTITY(1,1), -- Cmbiar tipo de dato a dedcimal y que ya no se autoincrementable 
 	nombre VARCHAR(127),
 	primerApellido VARCHAR(127),
 	segundoApellido VARCHAR(127),
 	paisProcedencia VARCHAR(127),
-	direccion VARCHAR(511),
-	fechaNacimiento DATE,
+	direccion VARCHAR(511),			--- Borrar estos identidad
+	fechaNacimiento DATE,			--- Borrar esta identidad
 	telefono DECIMAL(15),
 	correo VARCHAR(320)
 	);
 
 CREATE TABLE hotel.dbo.Reservas (
 	numeroReserva INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-	identificacionCliente INT NOT NULL,
+	identificacionCliente INT NOT NULL,   --- Cambiar a decimal 
 	inicioReserva DATE,
 	finReserva DATE,
 	cantPersonas INT,
