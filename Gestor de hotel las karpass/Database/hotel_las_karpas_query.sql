@@ -138,15 +138,3 @@ INSERT INTO hotel.dbo.Habitaciones
 	(18, 4),
 	(19, 4),
 	(20, 4)
-
--- Ejemplos para tablas --
-
-INSERT INTO hotel.dbo.Clientes (nombre, primerApellido, segundoApellido, paisProcedencia, direccion, fechaNacimiento, telefono, correo)
-VALUES 
-  ('Juan', 'Martinez', 'Gomez', 'España', 'Calle Mayor 123', '1990-05-15', 34678901234, 'juan.martinez@example.com'),
-  ('Maria', 'Garcia', 'Lopez', 'México', 'Avenida Reforma 456', '1985-10-20', 5255555555, 'maria.garcia@example.com'),
-  ('Luis', 'Rodriguez', 'Hernandez', 'Colombia', 'Carrera 7 89-10', '1982-03-12', 573123456789, 'luis.rodriguez@example.com'),
-  ('Ana', 'Perez', 'Gutierrez', 'Argentina', 'Avenida Corrientes 789', '1995-08-28', 5491123456789, 'ana.perez@example.com'),
-  ('Carlos', 'Lopez', 'Diaz', 'Chile', 'Calle Santiago 321', '1978-12-03', 56987654321, 'carlos.lopez@example.com');
-
-SELECT identificacionCliente, nombre + ' ' + primerApellido AS nombreCompleto FROM Clientes ORDER BY nombreCompleto ASC
