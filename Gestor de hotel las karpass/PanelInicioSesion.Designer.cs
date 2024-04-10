@@ -69,6 +69,8 @@
             this.TxCuenta.Name = "TxCuenta";
             this.TxCuenta.Size = new System.Drawing.Size(255, 29);
             this.TxCuenta.TabIndex = 2;
+            this.TxCuenta.Enter += new System.EventHandler(this.TxCuenta_Enter);
+            this.TxCuenta.Leave += new System.EventHandler(this.TxCuenta_Leave);
             // 
             // TxContrasena
             // 
@@ -77,6 +79,8 @@
             this.TxContrasena.Name = "TxContrasena";
             this.TxContrasena.Size = new System.Drawing.Size(255, 29);
             this.TxContrasena.TabIndex = 3;
+            this.TxContrasena.Enter += new System.EventHandler(this.TxContrasena_Enter);
+            this.TxContrasena.Leave += new System.EventHandler(this.TxContrasena_Leave);
             // 
             // LogoPrincipal
             // 
@@ -120,7 +124,8 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "PanelInicioSesion";
-            this.Text = "Form1";
+            this.Text = "Panel de Inicio de Sesion";
+            this.Load += new System.EventHandler(this.PanelInicioSesion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.LogoPrincipal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoCuenta)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoContrasena)).EndInit();
