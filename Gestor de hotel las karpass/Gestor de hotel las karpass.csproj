@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientesForm.Designer.cs">
+      <DependentUpon>ClientesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PanelInicioSesion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,14 +64,38 @@
     <Compile Include="PanelPrincipal.Designer.cs">
       <DependentUpon>PanelPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="PersonalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PersonalForm.Designer.cs">
+      <DependentUpon>PersonalForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReporteriaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReporteriaForm.Designer.cs">
+      <DependentUpon>ReporteriaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReservasForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReservasForm.Designer.cs">
+      <DependentUpon>ReservasForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ClientesForm.resx">
+      <DependentUpon>ClientesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PanelInicioSesion.resx">
       <DependentUpon>PanelInicioSesion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PanelPrincipal.resx">
       <DependentUpon>PanelPrincipal.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PersonalForm.resx">
+      <DependentUpon>PersonalForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -76,6 +106,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ReporteriaForm.resx">
+      <DependentUpon>ReporteriaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReservasForm.resx">
+      <DependentUpon>ReservasForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -35,73 +35,41 @@ namespace Gestor_de_hotel_las_karpass
         private void BtCliente_Click(object sender, EventArgs e)
         {
             CambiarColorBoton(BtCliente);
-            // Limpiar cualquier control existente en el PanelAreaDeTrabajo
-            PanelAreaDeTrabajo.Controls.Clear();
 
-            string mensaje = "Botón seleccionado: Cliente";
-            // Crear un nuevo control de texto con el mensaje
-            Label mensajeLabel = new Label();
-            mensajeLabel.Text = mensaje;
-            mensajeLabel.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            mensajeLabel.AutoSize = true;
-            mensajeLabel.Location = new Point(20, 20);
-
-            // Agregar el mensaje al PanelAreaDeTrabajo
-            PanelAreaDeTrabajo.Controls.Add(mensajeLabel);
+            cargarForm(new ClientesForm());
         }
 
         private void BtReservas_Click(object sender, EventArgs e)
         {
             CambiarColorBoton(BtReservas);
-            // Limpiar cualquier control existente en el PanelAreaDeTrabajo
-            PanelAreaDeTrabajo.Controls.Clear();
 
-            string mensaje = "Botón seleccionado: Reservas";
-            // Crear un nuevo control de texto con el mensaje
-            Label mensajeLabel = new Label();
-            mensajeLabel.Text = mensaje;
-            mensajeLabel.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            mensajeLabel.AutoSize = true;
-            mensajeLabel.Location = new Point(20, 20);
-
-            // Agregar el mensaje al PanelAreaDeTrabajo
-            PanelAreaDeTrabajo.Controls.Add(mensajeLabel);
+            cargarForm(new ReservasForm());
         }
 
         private void BtReportería_Click(object sender, EventArgs e)
         {
             CambiarColorBoton(BtReportería);
-            // Limpiar cualquier control existente en el PanelAreaDeTrabajo
-            PanelAreaDeTrabajo.Controls.Clear();
 
-            string mensaje = "Botón seleccionado: Reportería";
-            // Crear un nuevo control de texto con el mensaje
-            Label mensajeLabel = new Label();
-            mensajeLabel.Text = mensaje;
-            mensajeLabel.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            mensajeLabel.AutoSize = true;
-            mensajeLabel.Location = new Point(20, 20);
-
-            // Agregar el mensaje al PanelAreaDeTrabajo
-            PanelAreaDeTrabajo.Controls.Add(mensajeLabel);
+            cargarForm(new ReporteriaForm());
         }
 
         private void BtPersonal_Click(object sender, EventArgs e)
         {
             CambiarColorBoton(BtPersonal);
-            // Limpiar cualquier control existente en el PanelAreaDeTrabajo
-            PanelAreaDeTrabajo.Controls.Clear();
+            
+            cargarForm(new PersonalForm());
+        }
 
-            string mensaje = "Botón seleccionado: Personal";
-            // Crear un nuevo control de texto con el mensaje
-            Label mensajeLabel = new Label();
-            mensajeLabel.Text = mensaje;
-            mensajeLabel.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            mensajeLabel.AutoSize = true;
-            mensajeLabel.Location = new Point(20, 20);
-
-            // Agregar el mensaje al PanelAreaDeTrabajo
-            PanelAreaDeTrabajo.Controls.Add(mensajeLabel);
+        public void cargarForm(object Form)
+        {
+            if (this.PanelAreaDeTrabajo.Controls.Count > 0)
+                this.PanelAreaDeTrabajo.Controls.RemoveAt(0);
+            Form f = Form as Form;
+            f.TopLevel = false;
+            f.Dock = DockStyle.Fill;
+            this.PanelAreaDeTrabajo.Controls.Add(f);
+            this.PanelAreaDeTrabajo.Tag = f;
+            f.Show();
         }
     }
 }
