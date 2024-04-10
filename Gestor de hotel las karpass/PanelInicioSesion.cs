@@ -13,34 +13,74 @@ namespace Gestor_de_hotel_las_karpass
 {
     public partial class PanelInicioSesion : Form
     {
-        private ConexionBD conexionBD;
+        private ConexionBD conexion;
 
         public PanelInicioSesion()
         {
             InitializeComponent();
 
-            TxCuenta.Text = "Cuenta";
-            TxContrasena.Text = "Contraseña";
-            TxContrasena.PasswordChar = '\0'; 
+            // Inicializar el objeto ConexionBD
+            conexion = new ConexionBD();
         }
 
         private void PanelInicioSesion_Load(object sender, EventArgs e)
         {
-            ConexionBD conexion = new ConexionBD();
-
-            conexion.abrir();
+            TxCuenta.Text = "Cuenta";
+            TxContrasena.Text = "Contraseña";
+            TxContrasena.PasswordChar = '\0';
         }
 
         private void BtInicioSesion_Click(object sender, EventArgs e)
         {
-            // Oculta el formulario actual
-            this.Hide();
+            // Obtener el nombre de usuario y la contraseña ingresados por el usuario
+            string nombreUsuario = TxCuenta.Text;
+            string contrasena = TxContrasena.Text;
 
-            // Crea una instancia del formulario "PanelPrincipal"
-            PanelPrincipal formularioSecundario = new PanelPrincipal();
+            // Verificar las credenciales en la base de datos
+            bool credencialesValidas = VerificarCredenciales(nombreUsuario, contrasena);
 
-            // Muestra el formulario secundario
-            formularioSecundario.Show();
+            if (credencialesValidas)
+            {
+                // Oculta el formulario actual
+                this.Hide();
+
+                // Crea una instancia del formulario "PanelPrincipal"
+                PanelPrincipal formularioSecundario = new PanelPrincipal();
+
+                // Muestra el formulario secundario
+                formularioSecundario.Show();
+            }
+            else
+            {
+                // Mostrar ventana emergente de error
+                MessageBox.Show("Usuario o contraseña incorrectos. Inténtelo de nuevo.", "Error de inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool VerificarCredenciales(string nombreUsuario, string contrasena)
+        {
+            string query = "SELECT COUNT(*) FROM Empleados WHERE nombre = @nombreUsuario AND contrasena = @contrasena";
+
+            SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
+            command.Parameters.AddWithValue("@nombreUsuario", nombreUsuario);
+            command.Parameters.AddWithValue("@contrasena", contrasena);
+
+            try
+            {
+                conexion.abrir();
+                int count = (int)command.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                // Si count es mayor que 0, las credenciales son válidas
+                return count > 0;
+            }
+            catch 
+            {
+                return false;
+            }
+            finally
+            {
+                conexion.cerrar();
+            }
         }
 
         private void TxCuenta_Enter(object sender, EventArgs e)
