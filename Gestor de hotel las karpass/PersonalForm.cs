@@ -12,9 +12,15 @@ namespace Gestor_de_hotel_las_karpass
 {
     public partial class PersonalForm : Form
     {
-        public PersonalForm()
+        private ConexionBD conexion;
+        private FuncionesAux funcionesAux;
+        private int idEmpleado;
+        public PersonalForm(int idEmpleado)
         {
             InitializeComponent();
+            this.idEmpleado = idEmpleado;
+            conexion = new ConexionBD();
+            funcionesAux = new FuncionesAux(conexion);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Gestor_de_hotel_las_karpass
 
         private void PanelInicioSesion_Load(object sender, EventArgs e)
         {
-            TxCuenta.Text = "Cuenta";
+            TxCorreo.Text = "Correo";
             TxContrasena.Text = "Contraseña";
             TxContrasena.PasswordChar = '\0';
         }
@@ -33,19 +33,29 @@ namespace Gestor_de_hotel_las_karpass
         private void BtInicioSesion_Click(object sender, EventArgs e)
         {
             // Obtener el nombre de usuario y la contraseña ingresados por el usuario
-            string nombreUsuario = TxCuenta.Text;
+            string CorreoUsuario = TxCorreo.Text;
             string contrasena = TxContrasena.Text;
 
             // Verificar las credenciales en la base de datos
-            bool credencialesValidas = VerificarCredenciales(nombreUsuario, contrasena);
+            bool credencialesValidas = VerificarCredenciales(CorreoUsuario, contrasena);
 
             if (credencialesValidas)
             {
                 // Oculta el formulario actual
                 this.Hide();
 
+                conexion.abrir();
+                string query = "SELECT idEmpleado FROM Empleados WHERE Correo = @CorreoUsuario AND contrasena = @contrasena";
+
+                SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
+                command.Parameters.AddWithValue("@CorreoUsuario", CorreoUsuario);
+                command.Parameters.AddWithValue("@contrasena", contrasena);
+
+                int idEmpleado = (int)command.ExecuteScalar();
+                conexion.cerrar();
+
                 // Crea una instancia del formulario "PanelPrincipal"
-                PanelPrincipal formularioSecundario = new PanelPrincipal();
+                PanelPrincipal formularioSecundario = new PanelPrincipal(idEmpleado);
 
                 // Muestra el formulario secundario
                 formularioSecundario.Show();
@@ -53,22 +63,23 @@ namespace Gestor_de_hotel_las_karpass
             else
             {
                 // Mostrar ventana emergente de error
-                MessageBox.Show("Usuario o contraseña incorrectos. Inténtelo de nuevo.", "Error de inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Correo o contraseña incorrectos. Inténtelo de nuevo.", "Error de inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private bool VerificarCredenciales(string nombreUsuario, string contrasena)
+        // Función para verificar las credenciales del usuario en la base de datos
+        private bool VerificarCredenciales(string CorreoUsuario, string contrasena)
         {
-            string query = "SELECT COUNT(*) FROM Empleados WHERE nombre = @nombreUsuario AND contrasena = @contrasena";
+            string query = "SELECT COUNT(*) FROM Empleados WHERE Correo = @CorreoUsuario AND contrasena = @contrasena";
 
             SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
-            command.Parameters.AddWithValue("@nombreUsuario", nombreUsuario);
+            command.Parameters.AddWithValue("@CorreoUsuario", CorreoUsuario);
             command.Parameters.AddWithValue("@contrasena", contrasena);
 
             try
             {
                 conexion.abrir();
-                int count = (int)command.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+                int count = (int)command.ExecuteScalar(); 
 
                 // Si count es mayor que 0, las credenciales son válidas
                 return count > 0;
@@ -85,16 +96,16 @@ namespace Gestor_de_hotel_las_karpass
 
         private void TxCuenta_Enter(object sender, EventArgs e)
         {
-            if (TxCuenta.Text == "Cuenta")
+            if (TxCorreo.Text == "Correo")
             {
-                TxCuenta.Text = "";
+                TxCorreo.Text = "";
             }
         }
         private void TxCuenta_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TxCuenta.Text))
+            if (string.IsNullOrWhiteSpace(TxCorreo.Text))
             {
-                TxCuenta.Text = "Cuenta";
+                TxCorreo.Text = "Correo";
             }
         }
 

@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelInicioSesion));
             this.BtInicioSesion = new System.Windows.Forms.Button();
             this.Label_InicioSesion = new System.Windows.Forms.Label();
-            this.TxCuenta = new System.Windows.Forms.TextBox();
+            this.TxCorreo = new System.Windows.Forms.TextBox();
             this.TxContrasena = new System.Windows.Forms.TextBox();
             this.LogoPrincipal = new System.Windows.Forms.PictureBox();
             this.LogoCuenta = new System.Windows.Forms.PictureBox();
@@ -62,15 +62,15 @@
             this.Label_InicioSesion.TabIndex = 1;
             this.Label_InicioSesion.Text = "Inicio de Sesión";
             // 
-            // TxCuenta
+            // TxCorreo
             // 
-            this.TxCuenta.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.TxCuenta.Location = new System.Drawing.Point(451, 383);
-            this.TxCuenta.Name = "TxCuenta";
-            this.TxCuenta.Size = new System.Drawing.Size(255, 29);
-            this.TxCuenta.TabIndex = 2;
-            this.TxCuenta.Enter += new System.EventHandler(this.TxCuenta_Enter);
-            this.TxCuenta.Leave += new System.EventHandler(this.TxCuenta_Leave);
+            this.TxCorreo.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.TxCorreo.Location = new System.Drawing.Point(451, 383);
+            this.TxCorreo.Name = "TxCorreo";
+            this.TxCorreo.Size = new System.Drawing.Size(255, 29);
+            this.TxCorreo.TabIndex = 2;
+            this.TxCorreo.Enter += new System.EventHandler(this.TxCuenta_Enter);
+            this.TxCorreo.Leave += new System.EventHandler(this.TxCuenta_Leave);
             // 
             // TxContrasena
             // 
@@ -118,7 +118,7 @@
             this.Controls.Add(this.LogoCuenta);
             this.Controls.Add(this.LogoPrincipal);
             this.Controls.Add(this.TxContrasena);
-            this.Controls.Add(this.TxCuenta);
+            this.Controls.Add(this.TxCorreo);
             this.Controls.Add(this.Label_InicioSesion);
             this.Controls.Add(this.BtInicioSesion);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -138,7 +138,7 @@
 
         private System.Windows.Forms.Button BtInicioSesion;
         private System.Windows.Forms.Label Label_InicioSesion;
-        private System.Windows.Forms.TextBox TxCuenta;
+        private System.Windows.Forms.TextBox TxCorreo;
         private System.Windows.Forms.TextBox TxContrasena;
         private System.Windows.Forms.PictureBox LogoPrincipal;
         private System.Windows.Forms.PictureBox LogoCuenta;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,23 @@ namespace Gestor_de_hotel_las_karpass
     {
         // Variable para almacenar el último botón presionado
         private Button ultimoBoton = null;
+        private ConexionBD conexion;
+        private FuncionesAux funcionesAux;
+        private int idEmpleado;
 
-        public PanelPrincipal()
+        public PanelPrincipal(int idEmpleado)
         {
             InitializeComponent();
+            this.idEmpleado = idEmpleado;
+            conexion = new ConexionBD();
+            funcionesAux = new FuncionesAux(conexion);
+
+            int idRol = funcionesAux.ObtenerIdRol(idEmpleado); // Como puedo hacer esto
+            
+            if (idRol != 1)
+            {
+                BtPersonal.Visible = false;
+            }
         }
 
         // Función para cambiar el color del botón y restaurar el color del último botón presionado
@@ -36,28 +50,28 @@ namespace Gestor_de_hotel_las_karpass
         {
             CambiarColorBoton(BtCliente);
 
-            cargarForm(new ClientesForm());
+            cargarForm(new ClientesForm(idEmpleado));
         }
 
         private void BtReservas_Click(object sender, EventArgs e)
         {
             CambiarColorBoton(BtReservas);
 
-            cargarForm(new ReservasForm());
+            cargarForm(new ReservasForm(idEmpleado));
         }
 
         private void BtReportería_Click(object sender, EventArgs e)
         {
             CambiarColorBoton(BtReportería);
 
-            cargarForm(new ReporteriaForm());
+            cargarForm(new ReporteriaForm(idEmpleado));
         }
 
         private void BtPersonal_Click(object sender, EventArgs e)
         {
             CambiarColorBoton(BtPersonal);
             
-            cargarForm(new PersonalForm());
+            cargarForm(new PersonalForm(idEmpleado));
         }
 
         public void cargarForm(object Form)
