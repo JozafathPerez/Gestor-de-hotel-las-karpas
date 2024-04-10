@@ -69,6 +69,8 @@
             this.TxCuenta.Name = "TxCuenta";
             this.TxCuenta.Size = new System.Drawing.Size(255, 29);
             this.TxCuenta.TabIndex = 2;
+            this.TxCuenta.Enter += new System.EventHandler(this.TxCuenta_Enter);
+            this.TxCuenta.Leave += new System.EventHandler(this.TxCuenta_Leave);
             // 
             // TxContrasena
             // 
@@ -77,6 +79,8 @@
             this.TxContrasena.Name = "TxContrasena";
             this.TxContrasena.Size = new System.Drawing.Size(255, 29);
             this.TxContrasena.TabIndex = 3;
+            this.TxContrasena.Enter += new System.EventHandler(this.TxContrasena_Enter);
+            this.TxContrasena.Leave += new System.EventHandler(this.TxContrasena_Leave);
             // 
             // LogoPrincipal
             // 
