@@ -60,6 +60,8 @@ namespace Gestor_de_hotel_las_karpass
             cargarForm(new PersonalForm());
         }
 
+        // Función para cargar los Forms (los sub-menus) y colocarlos en el PanelAreaDeTrabajo
+        // También remueve lo que estaba antes en el panel!!
         public void cargarForm(object Form)
         {
             if (this.PanelAreaDeTrabajo.Controls.Count > 0)
