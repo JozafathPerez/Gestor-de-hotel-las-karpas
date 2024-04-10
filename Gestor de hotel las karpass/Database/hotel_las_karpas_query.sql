@@ -150,3 +150,35 @@ VALUES
   ('Carlos', 'Lopez', 'Diaz', 'Chile', 'Calle Santiago 321', '1978-12-03', 56987654321, 'carlos.lopez@example.com');
 
 SELECT identificacionCliente, nombre + ' ' + primerApellido AS nombreCompleto FROM Clientes ORDER BY nombreCompleto ASC
+
+
+-- Eliminar las columnas de direccion y fechaNacimiento
+ALTER TABLE hotel.dbo.Clientes
+DROP COLUMN direccion;
+
+ALTER TABLE hotel.dbo.Clientes
+DROP COLUMN fechaNacimiento;
+
+-- Eliminar la restricción de clave externa que referencia la tabla Clientes desde la tabla Reservas
+ALTER TABLE hotel.dbo.Reservas
+DROP CONSTRAINT FK_Clientes;
+
+-- Eliminar la base de datos 
+DROP TABLE hotel.dbo.Clientes;
+
+-- Crear una nueva tabla sin la propiedad del autoincrementable
+CREATE TABLE hotel.dbo.Clientes (
+    identificacionCliente DECIMAL(18, 0) NOT NULL,  -- Cambiar el tipo de dato si es necesario
+    nombre VARCHAR(127),
+    primerApellido VARCHAR(127),
+    segundoApellido VARCHAR(127),
+    paisProcedencia VARCHAR(127),
+    telefono DECIMAL(15),
+    correo VARCHAR(320),
+    PRIMARY KEY (identificacionCliente) 
+);
+
+-- Volver a crear la realcion de Reservas
+ALTER TABLE hotel.dbo.Reservas
+ADD CONSTRAINT FK_Clientes FOREIGN KEY (identificacionCliente) REFERENCES Clientes(identificacionCliente);
+

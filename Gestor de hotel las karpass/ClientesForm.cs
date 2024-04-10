@@ -41,24 +41,25 @@ namespace Gestor_de_hotel_las_karpass
         private void BtGuardar_Click(object sender, EventArgs e)
         {
             // Verifica si hay datos en los campos obligatorios
-            if (string.IsNullOrWhiteSpace(textNombre.Text) || string.IsNullOrWhiteSpace(textApellido1.Text) ||
-                string.IsNullOrWhiteSpace(textPais.Text) || string.IsNullOrWhiteSpace(textDireccion.Text) ||
-                string.IsNullOrWhiteSpace(textFechaNacimiento.Text) || string.IsNullOrWhiteSpace(textTelefono.Text) ||
+            if (string.IsNullOrWhiteSpace(textIdentificacionCliente.Text) || 
+                string.IsNullOrWhiteSpace(textNombre.Text) || 
+                string.IsNullOrWhiteSpace(textApellido1.Text) ||
+                string.IsNullOrWhiteSpace(textPais.Text) || 
+                string.IsNullOrWhiteSpace(textTelefono.Text) ||
                 string.IsNullOrWhiteSpace(textCorreo.Text))
             {
                 MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string query = "INSERT INTO Clientes (nombre, primerApellido, segundoApellido, paisProcedencia, direccion, fechaNacimiento, telefono, correo)" +
-                           "VALUES (@nombre, @primerApellido, @segundoApellido, @paisProcedencia, @direccion, @fechaNacimiento, @telefono, @correo)";
+            string query = "INSERT INTO Clientes (identificacionCliente, nombre, primerApellido, segundoApellido, paisProcedencia, telefono, correo)" +
+                           "VALUES (@identificacionCliente, @nombre, @primerApellido, @segundoApellido, @paisProcedencia, @telefono, @correo)";
             SqlCommand comando = new SqlCommand(query, conexion.ConectarBD);
+            comando.Parameters.AddWithValue("@identificacionCliente", textIdentificacionCliente.Text);
             comando.Parameters.AddWithValue("@nombre", textNombre.Text);
             comando.Parameters.AddWithValue("@primerApellido", textApellido1.Text);
             comando.Parameters.AddWithValue("@segundoApellido", textApellido2.Text);
             comando.Parameters.AddWithValue("@paisProcedencia", textPais.Text);
-            comando.Parameters.AddWithValue("@direccion", textDireccion.Text);
-            comando.Parameters.AddWithValue("@fechaNacimiento", textFechaNacimiento.Text);
             comando.Parameters.AddWithValue("@telefono", textTelefono.Text);
             comando.Parameters.AddWithValue("@correo", textCorreo.Text);
 
@@ -70,12 +71,11 @@ namespace Gestor_de_hotel_las_karpass
 
                 actualizarDataView();
 
+                textIdentificacionCliente.Text = "";
                 textNombre.Text = "";
                 textApellido1.Text = "";
                 textApellido2.Text = "";
                 textPais.Text = "";
-                textDireccion.Text = "";
-                textFechaNacimiento.Text = "";
                 textTelefono.Text = "";
                 textCorreo.Text = "";
             }
@@ -138,8 +138,6 @@ namespace Gestor_de_hotel_las_karpass
                 MessageBox.Show("Seleccione una fila para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
     }
 }
