@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,13 +13,22 @@ namespace Gestor_de_hotel_las_karpass
 {
     public partial class PanelInicioSesion : Form
     {
+        private ConexionBD conexionBD;
+
         public PanelInicioSesion()
         {
             InitializeComponent();
 
             TxCuenta.Text = "Cuenta";
             TxContrasena.Text = "Contraseña";
-            TxContrasena.PasswordChar = '\0'; // Mostrar caracteres normales en la contraseña
+            TxContrasena.PasswordChar = '\0'; 
+        }
+
+        private void PanelInicioSesion_Load(object sender, EventArgs e)
+        {
+            ConexionBD conexion = new ConexionBD();
+
+            conexion.abrir();
         }
 
         private void BtInicioSesion_Click(object sender, EventArgs e)
@@ -64,5 +74,6 @@ namespace Gestor_de_hotel_las_karpass
                 TxContrasena.PasswordChar = '\0'; 
             }
         }
+
     }
 }

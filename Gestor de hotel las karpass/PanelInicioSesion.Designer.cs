@@ -124,7 +124,8 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "PanelInicioSesion";
-            this.Text = "Form1";
+            this.Text = "Panel de Inicio de Sesion";
+            this.Load += new System.EventHandler(this.PanelInicioSesion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.LogoPrincipal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoCuenta)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoContrasena)).EndInit();
