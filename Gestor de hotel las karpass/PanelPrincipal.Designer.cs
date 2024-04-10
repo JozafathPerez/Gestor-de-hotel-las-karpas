@@ -31,20 +31,20 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelPrincipal));
             this.PanelAreaDeTrabajo = new System.Windows.Forms.Panel();
             this.PanelMenu = new System.Windows.Forms.Panel();
-            this.ImagenMenu = new System.Windows.Forms.PictureBox();
-            this.BtCliente = new System.Windows.Forms.Button();
-            this.BtReservas = new System.Windows.Forms.Button();
-            this.BtReportería = new System.Windows.Forms.Button();
             this.BtPersonal = new System.Windows.Forms.Button();
+            this.BtReportería = new System.Windows.Forms.Button();
+            this.BtReservas = new System.Windows.Forms.Button();
+            this.BtCliente = new System.Windows.Forms.Button();
+            this.ImagenMenu = new System.Windows.Forms.PictureBox();
             this.PanelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImagenMenu)).BeginInit();
             this.SuspendLayout();
             // 
             // PanelAreaDeTrabajo
             // 
-            this.PanelAreaDeTrabajo.Location = new System.Drawing.Point(231, 0);
+            this.PanelAreaDeTrabajo.Location = new System.Drawing.Point(234, 0);
             this.PanelAreaDeTrabajo.Name = "PanelAreaDeTrabajo";
-            this.PanelAreaDeTrabajo.Size = new System.Drawing.Size(1015, 665);
+            this.PanelAreaDeTrabajo.Size = new System.Drawing.Size(1012, 664);
             this.PanelAreaDeTrabajo.TabIndex = 0;
             // 
             // PanelMenu
@@ -59,38 +59,17 @@
             this.PanelMenu.Size = new System.Drawing.Size(235, 665);
             this.PanelMenu.TabIndex = 1;
             // 
-            // ImagenMenu
+            // BtPersonal
             // 
-            this.ImagenMenu.Image = ((System.Drawing.Image)(resources.GetObject("ImagenMenu.Image")));
-            this.ImagenMenu.Location = new System.Drawing.Point(0, 0);
-            this.ImagenMenu.Name = "ImagenMenu";
-            this.ImagenMenu.Size = new System.Drawing.Size(235, 665);
-            this.ImagenMenu.TabIndex = 0;
-            this.ImagenMenu.TabStop = false;
-            // 
-            // BtCliente
-            // 
-            this.BtCliente.BackColor = System.Drawing.Color.PapayaWhip;
-            this.BtCliente.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtCliente.Location = new System.Drawing.Point(28, 206);
-            this.BtCliente.Name = "BtCliente";
-            this.BtCliente.Size = new System.Drawing.Size(178, 30);
-            this.BtCliente.TabIndex = 0;
-            this.BtCliente.Text = "Gestión de clientes";
-            this.BtCliente.UseVisualStyleBackColor = false;
-            this.BtCliente.Click += new System.EventHandler(this.BtCliente_Click);
-            // 
-            // BtReservas
-            // 
-            this.BtReservas.BackColor = System.Drawing.Color.PapayaWhip;
-            this.BtReservas.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtReservas.Location = new System.Drawing.Point(28, 260);
-            this.BtReservas.Name = "BtReservas";
-            this.BtReservas.Size = new System.Drawing.Size(178, 30);
-            this.BtReservas.TabIndex = 1;
-            this.BtReservas.Text = "Gestión de reservas";
-            this.BtReservas.UseVisualStyleBackColor = false;
-            this.BtReservas.Click += new System.EventHandler(this.BtReservas_Click);
+            this.BtPersonal.BackColor = System.Drawing.Color.PapayaWhip;
+            this.BtPersonal.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.BtPersonal.Location = new System.Drawing.Point(28, 373);
+            this.BtPersonal.Name = "BtPersonal";
+            this.BtPersonal.Size = new System.Drawing.Size(178, 30);
+            this.BtPersonal.TabIndex = 3;
+            this.BtPersonal.Text = "Gestión de personal";
+            this.BtPersonal.UseVisualStyleBackColor = false;
+            this.BtPersonal.Click += new System.EventHandler(this.BtPersonal_Click);
             // 
             // BtReportería
             // 
@@ -104,17 +83,38 @@
             this.BtReportería.UseVisualStyleBackColor = false;
             this.BtReportería.Click += new System.EventHandler(this.BtReportería_Click);
             // 
-            // BtPersonal
+            // BtReservas
             // 
-            this.BtPersonal.BackColor = System.Drawing.Color.PapayaWhip;
-            this.BtPersonal.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtPersonal.Location = new System.Drawing.Point(28, 373);
-            this.BtPersonal.Name = "BtPersonal";
-            this.BtPersonal.Size = new System.Drawing.Size(178, 30);
-            this.BtPersonal.TabIndex = 3;
-            this.BtPersonal.Text = "Gestión de personal";
-            this.BtPersonal.UseVisualStyleBackColor = false;
-            this.BtPersonal.Click += new System.EventHandler(this.BtPersonal_Click);
+            this.BtReservas.BackColor = System.Drawing.Color.PapayaWhip;
+            this.BtReservas.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.BtReservas.Location = new System.Drawing.Point(28, 260);
+            this.BtReservas.Name = "BtReservas";
+            this.BtReservas.Size = new System.Drawing.Size(178, 30);
+            this.BtReservas.TabIndex = 1;
+            this.BtReservas.Text = "Gestión de reservas";
+            this.BtReservas.UseVisualStyleBackColor = false;
+            this.BtReservas.Click += new System.EventHandler(this.BtReservas_Click);
+            // 
+            // BtCliente
+            // 
+            this.BtCliente.BackColor = System.Drawing.Color.PapayaWhip;
+            this.BtCliente.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.BtCliente.Location = new System.Drawing.Point(28, 206);
+            this.BtCliente.Name = "BtCliente";
+            this.BtCliente.Size = new System.Drawing.Size(178, 30);
+            this.BtCliente.TabIndex = 0;
+            this.BtCliente.Text = "Gestión de clientes";
+            this.BtCliente.UseVisualStyleBackColor = false;
+            this.BtCliente.Click += new System.EventHandler(this.BtCliente_Click);
+            // 
+            // ImagenMenu
+            // 
+            this.ImagenMenu.Image = ((System.Drawing.Image)(resources.GetObject("ImagenMenu.Image")));
+            this.ImagenMenu.Location = new System.Drawing.Point(0, 0);
+            this.ImagenMenu.Name = "ImagenMenu";
+            this.ImagenMenu.Size = new System.Drawing.Size(235, 665);
+            this.ImagenMenu.TabIndex = 0;
+            this.ImagenMenu.TabStop = false;
             // 
             // PanelPrincipal
             // 
