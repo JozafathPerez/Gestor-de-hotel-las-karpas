@@ -10,7 +10,7 @@ namespace Gestor_de_hotel_las_karpass
 {
     class ConexionBD
     {
-        string cadena = "Data source=ZYZZJOZA;Initial Catalog=hotel; Integrated Security=True";
+        string cadena = "Data source=" + Environment.MachineName + "; Initial Catalog=hotel; Integrated Security=True";
 
         public SqlConnection ConectarBD = new SqlConnection();
 
