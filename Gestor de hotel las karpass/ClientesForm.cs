@@ -24,6 +24,12 @@ namespace Gestor_de_hotel_las_karpass
             conexion = new ConexionBD();
             funcionesAux = new FuncionesAux(conexion);
             actualizarDataView();
+
+            int idRol = funcionesAux.ObtenerIdRol(idEmpleado); 
+
+            if (idRol != 1) { BtEliminar.Enabled = false; }
+            if (idRol == 3) { BtActualizar.Enabled = false; BtGuardar.Enabled = false; }
+
         }
 
         public void actualizarDataView()
@@ -92,7 +98,29 @@ namespace Gestor_de_hotel_las_karpass
 
         private void BtActualizar_Click(object sender, EventArgs e)
         {
+            // Verifica si hay una fila seleccionada en el DataGridView
+            if (DataViewClientes.SelectedRows.Count > 0)
+            {
+                // Obtener el idEmpleado de la fila seleccionada
+                decimal IdentificacionCliente = Convert.ToInt32(DataViewClientes.SelectedRows[0].Cells["IdCliente"].Value);
 
+                // Crear una instancia del formulario secundario
+                ActualizarClienteForm actualizarForm = new ActualizarClienteForm(IdentificacionCliente);
+
+                // Mostrar el formulario secundario como una ventana emergente
+                DialogResult resultado = actualizarForm.ShowDialog();
+
+                // Verificar el resultado del formulario secundario
+                if (resultado == DialogResult.OK)
+                {
+                    // Actualizar la vista de datos u realizar otras acciones necesarias
+                    actualizarDataView();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una fila para actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtEliminar_Click(object sender, EventArgs e)
