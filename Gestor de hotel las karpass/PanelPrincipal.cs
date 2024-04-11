@@ -26,12 +26,9 @@ namespace Gestor_de_hotel_las_karpass
             conexion = new ConexionBD();
             funcionesAux = new FuncionesAux(conexion);
 
-            int idRol = funcionesAux.ObtenerIdRol(idEmpleado); // Como puedo hacer esto
+            int idRol = funcionesAux.ObtenerIdRol(idEmpleado); 
             
-            if (idRol != 1)
-            {
-                BtPersonal.Visible = false;
-            }
+            if (idRol != 1) { BtPersonal.Visible = false; }
         }
 
         // Función para cambiar el color del botón y restaurar el color del último botón presionado
@@ -71,7 +68,7 @@ namespace Gestor_de_hotel_las_karpass
         {
             CambiarColorBoton(BtPersonal);
             
-            cargarForm(new PersonalForm(idEmpleado));
+            cargarForm(new PersonalForm());
         }
 
         // Función para cargar los Forms (los sub-menus) y colocarlos en el PanelAreaDeTrabajo
