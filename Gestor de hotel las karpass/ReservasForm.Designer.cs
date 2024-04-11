@@ -38,14 +38,19 @@
             this.datePickerInicio = new System.Windows.Forms.DateTimePicker();
             this.datePickerFin = new System.Windows.Forms.DateTimePicker();
             this.comboBoxCliente = new System.Windows.Forms.ComboBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.checkedListHabitaciones = new System.Windows.Forms.CheckedListBox();
+            this.labelPrecioTotal = new System.Windows.Forms.Label();
+            this.labelCantPersonas = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.labelCantPersonasMax = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // BtEliminar
             // 
             this.BtEliminar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtEliminar.Location = new System.Drawing.Point(777, 536);
+            this.BtEliminar.Location = new System.Drawing.Point(804, 536);
             this.BtEliminar.Name = "BtEliminar";
             this.BtEliminar.Size = new System.Drawing.Size(160, 40);
             this.BtEliminar.TabIndex = 4;
@@ -65,11 +70,11 @@
             // 
             this.label.AutoSize = true;
             this.label.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.label.Location = new System.Drawing.Point(60, 117);
+            this.label.Location = new System.Drawing.Point(60, 119);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(179, 21);
+            this.label.Size = new System.Drawing.Size(258, 21);
             this.label.TabIndex = 24;
-            this.label.Text = "Habitaciones a Reservar:";
+            this.label.Text = "Habitaciones disponibles a reservar:";
             // 
             // labelFinReserva
             // 
@@ -104,7 +109,7 @@
             // BtGuardar
             // 
             this.BtGuardar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtGuardar.Location = new System.Drawing.Point(155, 476);
+            this.BtGuardar.Location = new System.Drawing.Point(257, 484);
             this.BtGuardar.Name = "BtGuardar";
             this.BtGuardar.Size = new System.Drawing.Size(160, 40);
             this.BtGuardar.TabIndex = 20;
@@ -136,20 +141,66 @@
             this.comboBoxCliente.Size = new System.Drawing.Size(291, 21);
             this.comboBoxCliente.TabIndex = 39;
             // 
-            // checkedListBox1
+            // checkedListHabitaciones
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(64, 154);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(353, 139);
-            this.checkedListBox1.TabIndex = 40;
+            this.checkedListHabitaciones.CheckOnClick = true;
+            this.checkedListHabitaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkedListHabitaciones.FormattingEnabled = true;
+            this.checkedListHabitaciones.Location = new System.Drawing.Point(64, 154);
+            this.checkedListHabitaciones.Name = "checkedListHabitaciones";
+            this.checkedListHabitaciones.Size = new System.Drawing.Size(353, 256);
+            this.checkedListHabitaciones.TabIndex = 40;
+            this.checkedListHabitaciones.SelectedIndexChanged += new System.EventHandler(this.CheckedListHabitaciones_SelectedIndexChanged);
+            // 
+            // labelPrecioTotal
+            // 
+            this.labelPrecioTotal.AutoSize = true;
+            this.labelPrecioTotal.Font = new System.Drawing.Font("Segoe UI", 14F);
+            this.labelPrecioTotal.Location = new System.Drawing.Point(59, 491);
+            this.labelPrecioTotal.Name = "labelPrecioTotal";
+            this.labelPrecioTotal.Size = new System.Drawing.Size(81, 25);
+            this.labelPrecioTotal.TabIndex = 41;
+            this.labelPrecioTotal.Text = "Total: $0";
+            // 
+            // labelCantPersonas
+            // 
+            this.labelCantPersonas.AutoSize = true;
+            this.labelCantPersonas.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.labelCantPersonas.Location = new System.Drawing.Point(60, 423);
+            this.labelCantPersonas.Name = "labelCantPersonas";
+            this.labelCantPersonas.Size = new System.Drawing.Size(167, 21);
+            this.labelCantPersonas.TabIndex = 42;
+            this.labelCantPersonas.Text = "Cantidad de personas: ";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown1.Location = new System.Drawing.Point(233, 423);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(50, 24);
+            this.numericUpDown1.TabIndex = 43;
+            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // labelCantPersonasMax
+            // 
+            this.labelCantPersonasMax.AutoSize = true;
+            this.labelCantPersonasMax.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic);
+            this.labelCantPersonasMax.Location = new System.Drawing.Point(289, 423);
+            this.labelCantPersonasMax.Name = "labelCantPersonasMax";
+            this.labelCantPersonasMax.Size = new System.Drawing.Size(114, 21);
+            this.labelCantPersonasMax.TabIndex = 44;
+            this.labelCantPersonasMax.Text = "MAX sin definir";
             // 
             // ReservasForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 664);
-            this.Controls.Add(this.checkedListBox1);
+            this.Controls.Add(this.labelCantPersonasMax);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.labelCantPersonas);
+            this.Controls.Add(this.labelPrecioTotal);
+            this.Controls.Add(this.checkedListHabitaciones);
             this.Controls.Add(this.comboBoxCliente);
             this.Controls.Add(this.datePickerFin);
             this.Controls.Add(this.datePickerInicio);
@@ -164,6 +215,7 @@
             this.Name = "ReservasForm";
             this.Text = "ReservasForm";
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,6 +233,10 @@
         private System.Windows.Forms.DateTimePicker datePickerInicio;
         private System.Windows.Forms.DateTimePicker datePickerFin;
         private System.Windows.Forms.ComboBox comboBoxCliente;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox checkedListHabitaciones;
+        private System.Windows.Forms.Label labelPrecioTotal;
+        private System.Windows.Forms.Label labelCantPersonas;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label labelCantPersonasMax;
     }
 }
