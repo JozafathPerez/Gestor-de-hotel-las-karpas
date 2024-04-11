@@ -29,7 +29,7 @@ namespace Gestor_de_hotel_las_karpass
             catch (Exception ex)
             {
                 Console.WriteLine("ERROR: No se pudo abrir la BD" + ex.Message);
-            }                         
+            }                       
         }
 
         public void cerrar() 

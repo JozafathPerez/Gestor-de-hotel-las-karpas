@@ -1,4 +1,6 @@
-﻿namespace Gestor_de_hotel_las_karpass
+﻿using System;
+
+namespace Gestor_de_hotel_las_karpass
 {
     partial class ReservasForm
     {
@@ -41,10 +43,11 @@
             this.checkedListHabitaciones = new System.Windows.Forms.CheckedListBox();
             this.labelPrecioTotal = new System.Windows.Forms.Label();
             this.labelCantPersonas = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericCantPersonas = new System.Windows.Forms.NumericUpDown();
             this.labelCantPersonasMax = new System.Windows.Forms.Label();
+            this.btnConfirmarHabitaciones = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericCantPersonas)).BeginInit();
             this.SuspendLayout();
             // 
             // BtEliminar
@@ -109,20 +112,23 @@
             // BtGuardar
             // 
             this.BtGuardar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtGuardar.Location = new System.Drawing.Point(257, 484);
+            this.BtGuardar.Location = new System.Drawing.Point(64, 536);
             this.BtGuardar.Name = "BtGuardar";
             this.BtGuardar.Size = new System.Drawing.Size(160, 40);
             this.BtGuardar.TabIndex = 20;
             this.BtGuardar.Text = "GUARDAR";
             this.BtGuardar.UseVisualStyleBackColor = true;
+            this.BtGuardar.Click += new System.EventHandler(this.BtGuardar_Click);
             // 
             // datePickerInicio
             // 
-            this.datePickerInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.datePickerInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.datePickerInicio.Location = new System.Drawing.Point(126, 80);
             this.datePickerInicio.Name = "datePickerInicio";
             this.datePickerInicio.Size = new System.Drawing.Size(96, 20);
             this.datePickerInicio.TabIndex = 37;
+            this.datePickerInicio.MinDate = System.DateTime.Today;
+            this.datePickerInicio.Value = System.DateTime.Today;
             // 
             // datePickerFin
             // 
@@ -132,9 +138,13 @@
             this.datePickerFin.Name = "datePickerFin";
             this.datePickerFin.Size = new System.Drawing.Size(96, 20);
             this.datePickerFin.TabIndex = 38;
+            this.datePickerFin.MinDate = System.DateTime.Today.AddDays(1);
+            this.datePickerFin.Value = System.DateTime.Today.AddDays(1);
             // 
             // comboBoxCliente
             // 
+            this.comboBoxCliente.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxCliente.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxCliente.FormattingEnabled = true;
             this.comboBoxCliente.Location = new System.Drawing.Point(126, 38);
             this.comboBoxCliente.Name = "comboBoxCliente";
@@ -148,9 +158,8 @@
             this.checkedListHabitaciones.FormattingEnabled = true;
             this.checkedListHabitaciones.Location = new System.Drawing.Point(64, 154);
             this.checkedListHabitaciones.Name = "checkedListHabitaciones";
-            this.checkedListHabitaciones.Size = new System.Drawing.Size(353, 256);
+            this.checkedListHabitaciones.Size = new System.Drawing.Size(353, 251);
             this.checkedListHabitaciones.TabIndex = 40;
-            this.checkedListHabitaciones.SelectedIndexChanged += new System.EventHandler(this.CheckedListHabitaciones_SelectedIndexChanged);
             // 
             // labelPrecioTotal
             // 
@@ -166,38 +175,49 @@
             // 
             this.labelCantPersonas.AutoSize = true;
             this.labelCantPersonas.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.labelCantPersonas.Location = new System.Drawing.Point(60, 423);
+            this.labelCantPersonas.Location = new System.Drawing.Point(60, 456);
             this.labelCantPersonas.Name = "labelCantPersonas";
-            this.labelCantPersonas.Size = new System.Drawing.Size(167, 21);
+            this.labelCantPersonas.Size = new System.Drawing.Size(163, 21);
             this.labelCantPersonas.TabIndex = 42;
-            this.labelCantPersonas.Text = "Cantidad de personas: ";
+            this.labelCantPersonas.Text = "Cantidad de personas:";
             // 
-            // numericUpDown1
+            // numericCantPersonas
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(233, 423);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(50, 24);
-            this.numericUpDown1.TabIndex = 43;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericCantPersonas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericCantPersonas.Location = new System.Drawing.Point(229, 456);
+            this.numericCantPersonas.Name = "numericCantPersonas";
+            this.numericCantPersonas.Size = new System.Drawing.Size(50, 24);
+            this.numericCantPersonas.TabIndex = 43;
+            this.numericCantPersonas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // labelCantPersonasMax
             // 
             this.labelCantPersonasMax.AutoSize = true;
             this.labelCantPersonasMax.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic);
-            this.labelCantPersonasMax.Location = new System.Drawing.Point(289, 423);
+            this.labelCantPersonasMax.Location = new System.Drawing.Point(285, 456);
             this.labelCantPersonasMax.Name = "labelCantPersonasMax";
             this.labelCantPersonasMax.Size = new System.Drawing.Size(114, 21);
             this.labelCantPersonasMax.TabIndex = 44;
             this.labelCantPersonasMax.Text = "MAX sin definir";
+            // 
+            // btnConfirmarHabitaciones
+            // 
+            this.btnConfirmarHabitaciones.Location = new System.Drawing.Point(160, 411);
+            this.btnConfirmarHabitaciones.Name = "btnConfirmarHabitaciones";
+            this.btnConfirmarHabitaciones.Size = new System.Drawing.Size(158, 23);
+            this.btnConfirmarHabitaciones.TabIndex = 45;
+            this.btnConfirmarHabitaciones.Text = "Confirmar selección";
+            this.btnConfirmarHabitaciones.UseVisualStyleBackColor = true;
+            this.btnConfirmarHabitaciones.Click += new System.EventHandler(this.btnConfirmarHabitaciones_Click);
             // 
             // ReservasForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 664);
+            this.Controls.Add(this.btnConfirmarHabitaciones);
             this.Controls.Add(this.labelCantPersonasMax);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.numericCantPersonas);
             this.Controls.Add(this.labelCantPersonas);
             this.Controls.Add(this.labelPrecioTotal);
             this.Controls.Add(this.checkedListHabitaciones);
@@ -215,7 +235,7 @@
             this.Name = "ReservasForm";
             this.Text = "ReservasForm";
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericCantPersonas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,7 +256,8 @@
         private System.Windows.Forms.CheckedListBox checkedListHabitaciones;
         private System.Windows.Forms.Label labelPrecioTotal;
         private System.Windows.Forms.Label labelCantPersonas;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numericCantPersonas;
         private System.Windows.Forms.Label labelCantPersonasMax;
+        private System.Windows.Forms.Button btnConfirmarHabitaciones;
     }
 }

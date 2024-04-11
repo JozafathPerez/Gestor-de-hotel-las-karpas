@@ -18,6 +18,7 @@ namespace Gestor_de_hotel_las_karpass
         private int idEmpleado;
         const int EDICION = 1;
         const int LECTURA = 2;
+        int cantMaxPersonas;
 
         public ReservasForm(int idEmpleado)
         {
@@ -25,11 +26,29 @@ namespace Gestor_de_hotel_las_karpass
             this.idEmpleado = idEmpleado;
             conexion = new ConexionBD();
             funcionesAux = new FuncionesAux(conexion);
-            actualizarClientesCombobox();
-            actualizarHabitacionesDisponibles();
+            ActualizarDataView();
+            ActualizarClientesCombobox();
+            ActualizarHabitacionesDisponibles();
         }
 
-        private void actualizarClientesCombobox()
+        private void ActualizarDataView()
+        {
+            conexion.abrir();
+            string query = "SELECT numeroReserva AS [Num.], inicioReserva AS Inicio, finReserva AS Fin, " +
+                           "cantPersonas AS Personas, costoTotal AS Costo, identificacionCliente AS Cliente, " +
+                           "idEmpleado AS Encargado " +
+                           "FROM Reservas " +
+                           "WHERE cancelacionPendiente = 0 " +
+                           "ORDER BY numeroReserva DESC";
+            SqlCommand comando = new SqlCommand(query, conexion.ConectarBD);
+            SqlDataAdapter data = new SqlDataAdapter(comando);
+            DataTable tabla = new DataTable();
+            data.Fill(tabla);
+            DataViewReservas.DataSource = tabla;
+            conexion.cerrar();
+        }
+
+        private void ActualizarClientesCombobox()
         {
             try
             {
@@ -48,16 +67,18 @@ namespace Gestor_de_hotel_las_karpass
                         comboBoxCliente.Items.Add(id + ": " + nombre);
                     }
                 }
-                conexion.cerrar();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al recuperar informacion de Clientes: " + ex.Message);
+                MessageBox.Show("Error al recuperar informacion de Clientes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
+            finally
+            {
+                conexion.cerrar();
+            }
         }
 
-        private void actualizarHabitacionesDisponibles()
+        private void ActualizarHabitacionesDisponibles()
         {
             try
             {
@@ -82,35 +103,99 @@ namespace Gestor_de_hotel_las_karpass
                         checkedListHabitaciones.Items.Add(numHabitacion + "\t $" + precio + "\t" + capacidadMax + " P. Max");
                     }
                 }
-                conexion.cerrar();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al recuperar informacion de Habitaciones: " + ex.Message);
             }
+            finally
+            {
+                conexion.cerrar();
+            }
 
         }
 
-        private void CheckedListHabitaciones_SelectedIndexChanged(object sender, EventArgs e)
+        private void BtGuardar_Click(object sender, EventArgs e)
+        {
+            //Validar campos vacios
+
+            // Traer info de identificacion cliente
+            string idCliente = comboBoxCliente.SelectedText.Split(':')[0];
+
+            // Traer info de las fechas
+            DateTime inicio = datePickerInicio.Value;
+            DateTime fin = datePickerFin.Value;
+
+            if (fin < inicio) // en caso de que los valores de inicio y fin esten al revez
+            {
+                MessageBox.Show("Las fecha de inicio debe ser antes que la de fecha de fin", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string inicioString = $"{inicio.Year}-{inicio.Month}-{inicio.Day}";
+            string finString = $"{fin.Year}-{fin.Month}-{fin.Day}";
+
+            // Traer info de cantidad de personas
+            Int32.TryParse(numericCantPersonas.Text, out int cantPersonas);
+            if (cantPersonas > cantMaxPersonas)
+            {
+                MessageBox.Show("La cantidad de personas sobrepasa el maximo total que alcanzan en las habitaciones", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // ejecutar INSERT
+            try
+            {
+                conexion.abrir();
+                string query = $"INSERT INTO Reservas VALUES ({idCliente}, {inicioString}, {finString}, {cantPersonas}, NULL, {idEmpleado})";
+                SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
+
+                command.ExecuteNonQuery();
+                MessageBox.Show("La reserva se ha agregado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                ActualizarDataView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar la Reserva: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.cerrar();
+            }
+
+        }
+
+        private void btnConfirmarHabitaciones_Click(object sender, EventArgs e)
+        {
+            ActualizarLabelsTotalHabitaciones();
+        }
+
+        private void ActualizarLabelsTotalHabitaciones()
         {
             double precioTotal = 0;
-            double cantPersonasTotal = 0;
+            int cantPersonasTotal = 0;
             for (int i = 0; i < checkedListHabitaciones.CheckedItems.Count; i++)
             {
                 string itemString = checkedListHabitaciones.CheckedItems[i].ToString();
                 string[] itemStringSplit = itemString.Split('\t');
                 string precioString = funcionesAux.RemoverCaracteresNoNumericos(itemStringSplit[1]);
-                string cantPersonasString = funcionesAux.RemoverCaracteresNoNumericos(itemStringSplit[2]);
+                string cantPersonasString = itemStringSplit[2].Split(' ')[0];
                 Double.TryParse(precioString, out double precio);
-                Double.TryParse(cantPersonasString, out double cantPersonas);
+                Int32.TryParse(cantPersonasString, out int cantPersonas);
                 precioTotal += precio;
                 cantPersonasTotal += cantPersonas;
-
             }
+            // Traer info de las fechas
+            DateTime inicio = datePickerInicio.Value;
+            DateTime fin = datePickerFin.Value;
+            int noches = (fin - inicio).Days;
+            precioTotal *= noches;
 
             // Actualizar los labels
             labelCantPersonasMax.Text = "MAX " + cantPersonasTotal.ToString();
             labelPrecioTotal.Text = "Total: $" + precioTotal.ToString();
+
         }
     }
 }
