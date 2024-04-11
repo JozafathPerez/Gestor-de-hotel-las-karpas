@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Gestor_de_hotel_las_karpass
@@ -37,6 +38,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        // Remueve cualquier caracter de un string que no sea un numero o un punto
+        public string RemoverCaracteresNoNumericos(string input)
+        {
+            Regex regex = new Regex("[^0-9.]");
+            string resultado = regex.Replace(input, "");
+            return resultado;
+        }
 
 
 
