@@ -182,3 +182,6 @@ CREATE TABLE hotel.dbo.Clientes (
 ALTER TABLE hotel.dbo.Reservas
 ADD CONSTRAINT FK_Clientes FOREIGN KEY (identificacionCliente) REFERENCES Clientes(identificacionCliente);
 
+-- Hace que la columna correo en la tabla de empleados sea unico
+ALTER TABLE hotel.dbo.Empleados
+ADD CONSTRAINT UQ_Correo UNIQUE (correo);

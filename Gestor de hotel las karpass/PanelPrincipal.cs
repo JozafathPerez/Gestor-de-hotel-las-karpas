@@ -61,7 +61,7 @@ namespace Gestor_de_hotel_las_karpass
         {
             CambiarColorBoton(BtReportería);
 
-            cargarForm(new ReporteriaForm(idEmpleado));
+            cargarForm(new ReporteriaForm());
         }
 
         private void BtPersonal_Click(object sender, EventArgs e)

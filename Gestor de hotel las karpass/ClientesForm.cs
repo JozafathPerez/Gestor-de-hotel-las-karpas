@@ -110,12 +110,9 @@ namespace Gestor_de_hotel_las_karpass
                 // Mostrar el formulario secundario como una ventana emergente
                 DialogResult resultado = actualizarForm.ShowDialog();
 
-                // Verificar el resultado del formulario secundario
-                if (resultado == DialogResult.OK)
-                {
-                    // Actualizar la vista de datos u realizar otras acciones necesarias
-                    actualizarDataView();
-                }
+                // Actualizar la vista de datos u realizar otras acciones necesarias
+                actualizarDataView();
+                
             }
             else
             {
@@ -130,35 +127,42 @@ namespace Gestor_de_hotel_las_karpass
             {
                 // Obtiene el identificador de cliente de la fila seleccionada
                 int identificacionCliente = Convert.ToInt32(DataViewClientes.SelectedRows[0].Cells["IdCliente"].Value);
+                string nombreCliente = DataViewClientes.SelectedRows[0].Cells["Nombre"].Value.ToString();
 
-                // Prepara la consulta SQL para eliminar el cliente
-                string query = "DELETE FROM Clientes WHERE identificacionCliente = @identificacionCliente";
-                SqlCommand comando = new SqlCommand(query, conexion.ConectarBD);
-                comando.Parameters.AddWithValue("@identificacionCliente", identificacionCliente);
+                // Pregunta al usuario si está seguro de eliminar al cliente
+                DialogResult confirmacion = MessageBox.Show($"¿Está seguro de que desea eliminar al cliente '{nombreCliente}'?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                try
+                if (confirmacion == DialogResult.Yes)
                 {
-                    conexion.abrir();
-                    int filasAfectadas = comando.ExecuteNonQuery();
-                    if (filasAfectadas > 0)
+                    // Prepara la consulta SQL para eliminar el cliente
+                    string query = "DELETE FROM Clientes WHERE identificacionCliente = @identificacionCliente";
+                    SqlCommand comando = new SqlCommand(query, conexion.ConectarBD);
+                    comando.Parameters.AddWithValue("@identificacionCliente", identificacionCliente);
+
+                    try
                     {
-                        MessageBox.Show("El cliente ha sido eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        conexion.abrir();
+                        int filasAfectadas = comando.ExecuteNonQuery();
+                        if (filasAfectadas > 0)
+                        {
+                            MessageBox.Show("El cliente ha sido eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Actualiza la vista del DataGridView después de eliminar el cliente
-                        actualizarDataView();
+                            // Actualiza la vista del DataGridView después de eliminar el cliente
+                            actualizarDataView();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontró el cliente seleccionado en la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("No se encontró el cliente seleccionado en la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error al eliminar el cliente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al eliminar el cliente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    conexion.cerrar();
+                    finally
+                    {
+                        conexion.cerrar();
+                    }
                 }
             }
             else
@@ -166,6 +170,7 @@ namespace Gestor_de_hotel_las_karpass
                 MessageBox.Show("Seleccione una fila para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
     }
 }

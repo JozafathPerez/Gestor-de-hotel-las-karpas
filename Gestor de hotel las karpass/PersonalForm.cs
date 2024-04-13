@@ -167,12 +167,9 @@ namespace Gestor_de_hotel_las_karpass
                 // Mostrar el formulario secundario como una ventana emergente
                 DialogResult resultado = actualizarForm.ShowDialog();
 
-                // Verificar el resultado del formulario secundario
-                if (resultado == DialogResult.OK)
-                {
-                    // Actualizar la vista de datos u realizar otras acciones necesarias
-                    actualizarDataView();
-                }
+                // Actualizar la vista de datos u realizar otras acciones necesarias
+                actualizarDataView();
+                
             }
             else
             {
@@ -186,37 +183,44 @@ namespace Gestor_de_hotel_las_karpass
             // Verifica si hay una fila seleccionada en el DataGridView
             if (DataViewPersonal.SelectedRows.Count > 0)
             {
-                // Obtiene el idEmpleado de la fila seleccionada
+                // Obtiene el idEmpleado y el nombre de la fila seleccionada
                 int idEmpleado = Convert.ToInt32(DataViewPersonal.SelectedRows[0].Cells["IdEmpleado"].Value);
+                string nombreEmpleado = DataViewPersonal.SelectedRows[0].Cells["Nombre"].Value.ToString(); 
 
-                // Prepara la consulta SQL para eliminar el empleado
-                string query = "DELETE FROM Empleados WHERE idEmpleado = @idEmpleado";
-                SqlCommand comando = new SqlCommand(query, conexion.ConectarBD);
-                comando.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                // Pregunta al usuario si está seguro de eliminar al empleado
+                DialogResult confirmacion = MessageBox.Show($"¿Está seguro de que desea eliminar al empleado '{nombreEmpleado}'?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                try
+                if (confirmacion == DialogResult.Yes)
                 {
-                    conexion.abrir();
-                    int filasAfectadas = comando.ExecuteNonQuery();
-                    if (filasAfectadas > 0)
+                    // Prepara la consulta SQL para eliminar el empleado
+                    string query = "DELETE FROM Empleados WHERE idEmpleado = @idEmpleado";
+                    SqlCommand comando = new SqlCommand(query, conexion.ConectarBD);
+                    comando.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+
+                    try
                     {
-                        MessageBox.Show("El empleado ha sido eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        conexion.abrir();
+                        int filasAfectadas = comando.ExecuteNonQuery();
+                        if (filasAfectadas > 0)
+                        {
+                            MessageBox.Show("El empleado ha sido eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Actualiza la vista del DataGridView después de eliminar el empleado
-                        actualizarDataView();
+                            // Actualiza la vista del DataGridView después de eliminar el empleado
+                            actualizarDataView();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontró el empleado seleccionado en la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("No se encontró el empleado seleccionado en la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error al eliminar el empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al eliminar el empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    conexion.cerrar();
+                    finally
+                    {
+                        conexion.cerrar();
+                    }
                 }
             }
             else
@@ -224,6 +228,8 @@ namespace Gestor_de_hotel_las_karpass
                 MessageBox.Show("Seleccione una fila para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
 
 
     }
