@@ -6,7 +6,6 @@ CREATE DATABASE hotel
 
 CREATE TABLE hotel.dbo.Habitaciones (
 	numeroHabitacion INT NOT NULL PRIMARY KEY,
-	estadoOcupado BIT DEFAULT 0,
 	idTipoHabitacion INT NOT NULL
 	);
 
@@ -44,20 +43,18 @@ CREATE TABLE hotel.dbo.Empleados (
 	);
 
 CREATE TABLE hotel.dbo.Clientes (
-	identificacionCliente INT NOT NULL PRIMARY KEY IDENTITY(1,1), -- Cmbiar tipo de dato a dedcimal y que ya no se autoincrementable 
+	identificacionCliente DECIMAL(18, 0) NOT NULL PRIMARY KEY,
 	nombre VARCHAR(127),
 	primerApellido VARCHAR(127),
 	segundoApellido VARCHAR(127),
 	paisProcedencia VARCHAR(127),
-	direccion VARCHAR(511),			--- Borrar estos identidad
-	fechaNacimiento DATE,			--- Borrar esta identidad
 	telefono DECIMAL(15),
 	correo VARCHAR(320)
 	);
 
 CREATE TABLE hotel.dbo.Reservas (
 	numeroReserva INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-	identificacionCliente INT NOT NULL,   --- Cambiar a decimal 
+	identificacionCliente DECIMAL(18, 0) NOT NULL,
 	inicioReserva DATE,
 	finReserva DATE,
 	cantPersonas INT,
@@ -151,6 +148,7 @@ VALUES
 
 SELECT identificacionCliente, nombre + ' ' + primerApellido AS nombreCompleto FROM Clientes ORDER BY nombreCompleto ASC
 
+-- PARA LOS ERRORES CON LA IDENTIFICACION DE CLIENTE (si se tiene la version anterior de la BD)
 
 -- Eliminar las columnas de direccion y fechaNacimiento
 ALTER TABLE hotel.dbo.Clientes
@@ -178,7 +176,10 @@ CREATE TABLE hotel.dbo.Clientes (
     PRIMARY KEY (identificacionCliente) 
 );
 
+-- Cambiar el tipo de dato en reservas para relacionar con la reserva
+ALTER TABLE hotel.dbo.Reservas
+ALTER COLUMN identificacionCliente DECIMAL(18,0) NOT NULL
+
 -- Volver a crear la realcion de Reservas
 ALTER TABLE hotel.dbo.Reservas
 ADD CONSTRAINT FK_Clientes FOREIGN KEY (identificacionCliente) REFERENCES Clientes(identificacionCliente);
-

@@ -45,7 +45,6 @@ namespace Gestor_de_hotel_las_karpass
             this.labelCantPersonas = new System.Windows.Forms.Label();
             this.numericCantPersonas = new System.Windows.Forms.NumericUpDown();
             this.labelCantPersonasMax = new System.Windows.Forms.Label();
-            this.btnConfirmarHabitaciones = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantPersonas)).BeginInit();
             this.SuspendLayout();
@@ -62,10 +61,14 @@ namespace Gestor_de_hotel_las_karpass
             // 
             // DataViewReservas
             // 
-            this.DataViewReservas.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DataViewReservas.AllowUserToAddRows = false;
+            this.DataViewReservas.AllowUserToDeleteRows = false;
+            this.DataViewReservas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.DataViewReservas.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DataViewReservas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataViewReservas.Location = new System.Drawing.Point(492, 39);
             this.DataViewReservas.Name = "DataViewReservas";
+            this.DataViewReservas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DataViewReservas.Size = new System.Drawing.Size(472, 477);
             this.DataViewReservas.TabIndex = 3;
             // 
@@ -124,22 +127,24 @@ namespace Gestor_de_hotel_las_karpass
             // 
             this.datePickerInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.datePickerInicio.Location = new System.Drawing.Point(126, 80);
+            this.datePickerInicio.MinDate = new System.DateTime(2024, 4, 12, 0, 0, 0, 0);
             this.datePickerInicio.Name = "datePickerInicio";
             this.datePickerInicio.Size = new System.Drawing.Size(96, 20);
             this.datePickerInicio.TabIndex = 37;
-            this.datePickerInicio.MinDate = System.DateTime.Today;
-            this.datePickerInicio.Value = System.DateTime.Today;
+            this.datePickerInicio.Value = new System.DateTime(2024, 4, 12, 0, 0, 0, 0);
+            this.datePickerInicio.ValueChanged += new System.EventHandler(this.datePickerInicio_ValueChanged);
             // 
             // datePickerFin
             // 
             this.datePickerFin.Checked = false;
             this.datePickerFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.datePickerFin.Location = new System.Drawing.Point(321, 80);
+            this.datePickerFin.MinDate = new System.DateTime(2024, 4, 13, 0, 0, 0, 0);
             this.datePickerFin.Name = "datePickerFin";
             this.datePickerFin.Size = new System.Drawing.Size(96, 20);
             this.datePickerFin.TabIndex = 38;
-            this.datePickerFin.MinDate = System.DateTime.Today.AddDays(1);
-            this.datePickerFin.Value = System.DateTime.Today.AddDays(1);
+            this.datePickerFin.Value = new System.DateTime(2024, 4, 13, 0, 0, 0, 0);
+            this.datePickerFin.ValueChanged += new System.EventHandler(this.datePickerFin_ValueChanged);
             // 
             // comboBoxCliente
             // 
@@ -160,6 +165,7 @@ namespace Gestor_de_hotel_las_karpass
             this.checkedListHabitaciones.Name = "checkedListHabitaciones";
             this.checkedListHabitaciones.Size = new System.Drawing.Size(353, 251);
             this.checkedListHabitaciones.TabIndex = 40;
+            this.checkedListHabitaciones.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListHabitaciones_ItemCheck);
             // 
             // labelPrecioTotal
             // 
@@ -175,7 +181,7 @@ namespace Gestor_de_hotel_las_karpass
             // 
             this.labelCantPersonas.AutoSize = true;
             this.labelCantPersonas.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.labelCantPersonas.Location = new System.Drawing.Point(60, 456);
+            this.labelCantPersonas.Location = new System.Drawing.Point(62, 421);
             this.labelCantPersonas.Name = "labelCantPersonas";
             this.labelCantPersonas.Size = new System.Drawing.Size(163, 21);
             this.labelCantPersonas.TabIndex = 42;
@@ -184,38 +190,43 @@ namespace Gestor_de_hotel_las_karpass
             // numericCantPersonas
             // 
             this.numericCantPersonas.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericCantPersonas.Location = new System.Drawing.Point(229, 456);
+            this.numericCantPersonas.Location = new System.Drawing.Point(231, 421);
+            this.numericCantPersonas.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericCantPersonas.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericCantPersonas.Name = "numericCantPersonas";
             this.numericCantPersonas.Size = new System.Drawing.Size(50, 24);
             this.numericCantPersonas.TabIndex = 43;
             this.numericCantPersonas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericCantPersonas.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericCantPersonas.ValueChanged += new System.EventHandler(this.numericCantPersonas_ValueChanged);
             // 
             // labelCantPersonasMax
             // 
             this.labelCantPersonasMax.AutoSize = true;
             this.labelCantPersonasMax.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic);
-            this.labelCantPersonasMax.Location = new System.Drawing.Point(285, 456);
+            this.labelCantPersonasMax.Location = new System.Drawing.Point(287, 421);
             this.labelCantPersonasMax.Name = "labelCantPersonasMax";
             this.labelCantPersonasMax.Size = new System.Drawing.Size(114, 21);
             this.labelCantPersonasMax.TabIndex = 44;
             this.labelCantPersonasMax.Text = "MAX sin definir";
-            // 
-            // btnConfirmarHabitaciones
-            // 
-            this.btnConfirmarHabitaciones.Location = new System.Drawing.Point(160, 411);
-            this.btnConfirmarHabitaciones.Name = "btnConfirmarHabitaciones";
-            this.btnConfirmarHabitaciones.Size = new System.Drawing.Size(158, 23);
-            this.btnConfirmarHabitaciones.TabIndex = 45;
-            this.btnConfirmarHabitaciones.Text = "Confirmar selección";
-            this.btnConfirmarHabitaciones.UseVisualStyleBackColor = true;
-            this.btnConfirmarHabitaciones.Click += new System.EventHandler(this.btnConfirmarHabitaciones_Click);
             // 
             // ReservasForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 664);
-            this.Controls.Add(this.btnConfirmarHabitaciones);
             this.Controls.Add(this.labelCantPersonasMax);
             this.Controls.Add(this.numericCantPersonas);
             this.Controls.Add(this.labelCantPersonas);
@@ -258,6 +269,5 @@ namespace Gestor_de_hotel_las_karpass
         private System.Windows.Forms.Label labelCantPersonas;
         private System.Windows.Forms.NumericUpDown numericCantPersonas;
         private System.Windows.Forms.Label labelCantPersonasMax;
-        private System.Windows.Forms.Button btnConfirmarHabitaciones;
     }
 }
