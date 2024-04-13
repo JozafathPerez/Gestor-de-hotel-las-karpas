@@ -1,8 +1,8 @@
--- Creación de base de datos --
+-- Creaciï¿½n de base de datos --
 
 CREATE DATABASE hotel
 
--- Creación de tablas (sin llaves foraneas)
+-- Creaciï¿½n de tablas (sin llaves foraneas)
 
 CREATE TABLE hotel.dbo.Habitaciones (
 	numeroHabitacion INT NOT NULL PRIMARY KEY,
@@ -110,7 +110,7 @@ INSERT INTO hotel.dbo.Roles
 INSERT INTO hotel.dbo.Empleados
 	(nombre, primerApellido, segundoApellido, fechaNacimiento, idRol, telefono, correo, contrasena, genero, direccion)
 	VALUES
-	('Administrador', 'Num', '1', '2000-01-01', 1, 50688888888, 'admin@gmail.com', 1234, 'masculino', 'Limón, Limón, Limón')
+	('Administrador', 'Num', '1', '2000-01-01', 1, 50688888888, 'admin@gmail.com', 1234, 'masculino', 'Limï¿½n, Limï¿½n, Limï¿½n')
 
 INSERT INTO hotel.dbo.Habitaciones
 	(numeroHabitacion, idTipoHabitacion)
@@ -140,8 +140,8 @@ INSERT INTO hotel.dbo.Habitaciones
 
 INSERT INTO hotel.dbo.Clientes (nombre, primerApellido, segundoApellido, paisProcedencia, direccion, fechaNacimiento, telefono, correo)
 VALUES 
-  ('Juan', 'Martinez', 'Gomez', 'España', 'Calle Mayor 123', '1990-05-15', 34678901234, 'juan.martinez@example.com'),
-  ('Maria', 'Garcia', 'Lopez', 'México', 'Avenida Reforma 456', '1985-10-20', 5255555555, 'maria.garcia@example.com'),
+  ('Juan', 'Martinez', 'Gomez', 'Espaï¿½a', 'Calle Mayor 123', '1990-05-15', 34678901234, 'juan.martinez@example.com'),
+  ('Maria', 'Garcia', 'Lopez', 'Mï¿½xico', 'Avenida Reforma 456', '1985-10-20', 5255555555, 'maria.garcia@example.com'),
   ('Luis', 'Rodriguez', 'Hernandez', 'Colombia', 'Carrera 7 89-10', '1982-03-12', 573123456789, 'luis.rodriguez@example.com'),
   ('Ana', 'Perez', 'Gutierrez', 'Argentina', 'Avenida Corrientes 789', '1995-08-28', 5491123456789, 'ana.perez@example.com'),
   ('Carlos', 'Lopez', 'Diaz', 'Chile', 'Calle Santiago 321', '1978-12-03', 56987654321, 'carlos.lopez@example.com');
@@ -157,7 +157,7 @@ DROP COLUMN direccion;
 ALTER TABLE hotel.dbo.Clientes
 DROP COLUMN fechaNacimiento;
 
--- Eliminar la restricción de clave externa que referencia la tabla Clientes desde la tabla Reservas
+-- Eliminar la restricciï¿½n de clave externa que referencia la tabla Clientes desde la tabla Reservas
 ALTER TABLE hotel.dbo.Reservas
 DROP CONSTRAINT FK_Clientes;
 
@@ -183,3 +183,7 @@ ALTER COLUMN identificacionCliente DECIMAL(18,0) NOT NULL
 -- Volver a crear la realcion de Reservas
 ALTER TABLE hotel.dbo.Reservas
 ADD CONSTRAINT FK_Clientes FOREIGN KEY (identificacionCliente) REFERENCES Clientes(identificacionCliente);
+
+-- Hace que la columna correo en la tabla de empleados sea unico
+ALTER TABLE hotel.dbo.Empleados
+ADD CONSTRAINT UQ_Correo UNIQUE (correo);

@@ -100,9 +100,6 @@ namespace Gestor_de_hotel_las_karpass
                 return;
             }
 
-            // Obtener la fecha de última modificación
-            string ultimaModificacion = ObtenerFechaActual();
-
             // Construir la consulta SQL de actualización
             string query = "UPDATE Empleados SET nombre = @nuevoNombre, primerApellido = @nuevoApellido1, segundoApellido = @nuevoApellido2, " +
                            "direccion = @nuevaDireccion, telefono = @nuevoTelefono, correo = @nuevoCorreo, idRol = @nuevoIdRol, " +
@@ -116,8 +113,8 @@ namespace Gestor_de_hotel_las_karpass
             comando.Parameters.AddWithValue("@nuevaDireccion", textDireccion.Text);
             comando.Parameters.AddWithValue("@nuevoTelefono", textTelefono.Text);
             comando.Parameters.AddWithValue("@nuevoCorreo", textCorreo.Text);
-            comando.Parameters.AddWithValue("@nuevoIdRol", ObtenerIdRol(boxRol.SelectedItem.ToString())); // Asegúrate de tener la función ObtenerIdRol implementada correctamente
-            comando.Parameters.AddWithValue("@ultimaModificacion", ultimaModificacion);
+            comando.Parameters.AddWithValue("@nuevoIdRol", ObtenerIdRol(boxRol.SelectedItem.ToString())); 
+            comando.Parameters.AddWithValue("@ultimaModificacion", ObtenerFechaActual());
             comando.Parameters.AddWithValue("@idEmpleado", idEmpleadoSelecionado);
 
             try
