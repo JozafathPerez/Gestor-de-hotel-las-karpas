@@ -71,6 +71,12 @@
       <DependentUpon>ClientesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ConexionBD.cs" />
+    <Compile Include="DetallesReservaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetallesReservaForm.Designer.cs">
+      <DependentUpon>DetallesReservaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FuncionesAux.cs" />
     <Compile Include="PanelInicioSesion.cs">
       <SubType>Form</SubType>
@@ -112,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ClientesForm.resx">
       <DependentUpon>ClientesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetallesReservaForm.resx">
+      <DependentUpon>DetallesReservaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PanelInicioSesion.resx">
       <DependentUpon>PanelInicioSesion.cs</DependentUpon>

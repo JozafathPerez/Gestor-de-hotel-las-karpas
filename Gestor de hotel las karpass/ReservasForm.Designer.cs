@@ -45,6 +45,7 @@ namespace Gestor_de_hotel_las_karpass
             this.labelCantPersonas = new System.Windows.Forms.Label();
             this.numericCantPersonas = new System.Windows.Forms.NumericUpDown();
             this.labelCantPersonasMax = new System.Windows.Forms.Label();
+            this.buttonModificar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantPersonas)).BeginInit();
             this.SuspendLayout();
@@ -52,22 +53,26 @@ namespace Gestor_de_hotel_las_karpass
             // BtEliminar
             // 
             this.BtEliminar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtEliminar.Location = new System.Drawing.Point(804, 536);
+            this.BtEliminar.Location = new System.Drawing.Point(835, 536);
             this.BtEliminar.Name = "BtEliminar";
-            this.BtEliminar.Size = new System.Drawing.Size(160, 40);
+            this.BtEliminar.Size = new System.Drawing.Size(129, 38);
             this.BtEliminar.TabIndex = 4;
-            this.BtEliminar.Text = "ELIMINAR";
+            this.BtEliminar.Text = "CANCELAR";
             this.BtEliminar.UseVisualStyleBackColor = true;
             // 
             // DataViewReservas
             // 
             this.DataViewReservas.AllowUserToAddRows = false;
             this.DataViewReservas.AllowUserToDeleteRows = false;
+            this.DataViewReservas.AllowUserToResizeRows = false;
             this.DataViewReservas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DataViewReservas.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DataViewReservas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataViewReservas.Location = new System.Drawing.Point(492, 39);
+            this.DataViewReservas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DataViewReservas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.DataViewReservas.Location = new System.Drawing.Point(492, 38);
             this.DataViewReservas.Name = "DataViewReservas";
+            this.DataViewReservas.ReadOnly = true;
             this.DataViewReservas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DataViewReservas.Size = new System.Drawing.Size(472, 477);
             this.DataViewReservas.TabIndex = 3;
@@ -222,11 +227,23 @@ namespace Gestor_de_hotel_las_karpass
             this.labelCantPersonasMax.TabIndex = 44;
             this.labelCantPersonasMax.Text = "MAX sin definir";
             // 
+            // buttonModificar
+            // 
+            this.buttonModificar.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.buttonModificar.Location = new System.Drawing.Point(700, 536);
+            this.buttonModificar.Name = "buttonModificar";
+            this.buttonModificar.Size = new System.Drawing.Size(129, 38);
+            this.buttonModificar.TabIndex = 45;
+            this.buttonModificar.Text = "MODIFICAR";
+            this.buttonModificar.UseVisualStyleBackColor = true;
+            this.buttonModificar.Click += new System.EventHandler(this.buttonModificar_Click);
+            // 
             // ReservasForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 664);
+            this.Controls.Add(this.buttonModificar);
             this.Controls.Add(this.labelCantPersonasMax);
             this.Controls.Add(this.numericCantPersonas);
             this.Controls.Add(this.labelCantPersonas);
@@ -269,5 +286,6 @@ namespace Gestor_de_hotel_las_karpass
         private System.Windows.Forms.Label labelCantPersonas;
         private System.Windows.Forms.NumericUpDown numericCantPersonas;
         private System.Windows.Forms.Label labelCantPersonasMax;
+        private System.Windows.Forms.Button buttonModificar;
     }
 }
