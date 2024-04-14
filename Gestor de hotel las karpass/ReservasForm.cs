@@ -367,6 +367,7 @@ namespace Gestor_de_hotel_las_karpass
             DetallesReservaForm detallesReservaForm = new DetallesReservaForm(idReserva);
             DialogResult dialogResult = detallesReservaForm.ShowDialog();
             ActualizarDataView();
+            ActualizarHabitacionesDisponibles();
         }
     }
 }

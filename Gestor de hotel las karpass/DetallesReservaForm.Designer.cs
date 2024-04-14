@@ -124,7 +124,6 @@
             // 
             // datePickerFin
             // 
-            this.datePickerFin.Checked = false;
             this.datePickerFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.datePickerFin.Location = new System.Drawing.Point(309, 96);
             this.datePickerFin.MinDate = new System.DateTime(2024, 4, 13, 0, 0, 0, 0);

@@ -109,8 +109,8 @@ namespace Gestor_de_hotel_las_karpass
                 labelNumReserva.Text = "N° reserva: " + numeroReserva.ToString();
                 labelEncargado.Text = "Encargado " + idEmpleado.ToString();
                 comboBoxCliente.Text = $"{idCliente}: {nombreCliente} {apellidoCliente}";
-                datePickerFin.Value = finReserva;
                 datePickerInicio.Value = inicioReserva;
+                datePickerFin.Value = finReserva;
                 numericCantPersonas.Value = cantPersonas;
             }
             catch (Exception ex)
@@ -126,19 +126,17 @@ namespace Gestor_de_hotel_las_karpass
         // Actualiza el check list con las habitaciones disponibles a reservar en el rango de fecha seleccionado
         private void ActualizarHabitacionesDisponibles()
         {
+            checkedListHabitaciones.Items.Clear();
             try
             {
                 // Traer informacion de la base de datos
                 conexion.abrir();
                 string query =
-                    "SELECT DISTINCT h.numeroHabitacion, t.precio, t.nombreTipo, t.capacidadMax, r.numeroReserva " +
+                    "SELECT DISTINCT h.numeroHabitacion, t.precio, t.nombreTipo, t.capacidadMax, rh.numeroReserva " +
                     "FROM hotel.dbo.Habitaciones h " +
                     "LEFT JOIN hotel.dbo.TiposHabitacion t ON h.idTipoHabitacion = t.idTipoHabitacion " +
                     "LEFT JOIN hotel.dbo.Reservashabitacion rh ON h.numeroHabitacion = rh.numeroHabitacion " +
-                    "LEFT JOIN hotel.dbo.Reservas r ON rh.numeroReserva = r.numeroReserva " +
-                    $"WHERE (r.inicioReserva > '{finReserva:yyyy-MM-dd}' " +
-                    $"OR r.finReserva < '{inicioReserva:yyyy-MM-dd}') " +
-                    $"OR r.numeroReserva = {numeroReserva}";
+                    $"WHERE rh.numeroReserva = {numeroReserva}";
                 SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
 
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -322,18 +320,31 @@ namespace Gestor_de_hotel_las_karpass
         {
             try
             {
-                conexion.abrir();
-                for (int i = 0; i < habitacionesSeleccionadas.Count; i++)
+                // encontrar las habitaciones deseleccionadas
+                List<int> habitacionesABorrar = new List<int>();
+
+                for (int i = 0; i < checkedListHabitaciones.Items.Count; i++)
                 {
-                    (int numero, double precio, string tipo, int maxPersonas) habitacion = habitacionesSeleccionadas[i];
-                    // crear comando
+                    if (checkedListHabitaciones.GetItemCheckState(i) == CheckState.Unchecked)
+                    {
+                        Int32.TryParse(checkedListHabitaciones.Items[i].ToString().Split('\t')[0], out int numBorrar);
+                        habitacionesABorrar.Add(numBorrar);
+                    }
+                }
+                Console.WriteLine(habitacionesABorrar.Count);
+
+                conexion.abrir();
+                for (int i = 0; i < habitacionesABorrar.Count; i++)
+                {
+                    // crear comando 
                     string query =
                         "DELETE FROM ReservasHabitacion " +
                         "WHERE numeroHabitacion = @numeroHabitacion AND numeroReserva = @numeroReserva";
                     SqlCommand cmd = new SqlCommand(query, conexion.ConectarBD);
-                    cmd.Parameters.AddWithValue("@numeroHabitacion", habitacion.numero);
+                    cmd.Parameters.AddWithValue("@numeroHabitacion", habitacionesABorrar[i]);
                     cmd.Parameters.AddWithValue("@numeroReserva", numReserva);
-                    cmd.ExecuteNonQuery();
+                    int resultado = cmd.ExecuteNonQuery();
+                    Console.WriteLine($"Resultado: {resultado}, Habitacion: {habitacionesABorrar[i]}, Reserva: {numReserva}");
                 }
             }
             catch (Exception ex)
