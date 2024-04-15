@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Windows.Forms.DataVisualization.Charting;
 
-
 namespace Gestor_de_hotel_las_karpass
 {
     public partial class ReporteriaForm : Form
@@ -134,13 +133,13 @@ namespace Gestor_de_hotel_las_karpass
             List<List<string>> clientes = obtenerCliente();
             List<List<string>> reservas = obtenerReservas();
 
-            for(int i = 0; i < clientes.Count; i++)
+            for (int i = 0; i < clientes.Count; i++)
             {
                 List<string> clienteActual = clientes[i];
-                for(int j = 0; j < reservas.Count; j++)
+                for (int j = 0; j < reservas.Count; j++)
                 {
                     List<string> reservaActual = reservas[j];
-                    if(clienteActual[0] == reservaActual[1])
+                    if (clienteActual[0] == reservaActual[1])
                     {
                         string estado;
                         if (int.Parse(reservaActual[8]) == 0) { estado = "Vigente"; } else { estado = "Cancelado"; }
@@ -175,11 +174,12 @@ namespace Gestor_de_hotel_las_karpass
                 {
                     List<string> reservaActual = reservas[j];
                     if (clienteActual[0] == reservaActual[1])
+
                     {
-                        string estado;
-                        if (int.Parse(reservaActual[8]) == 0) { estado = "Vigente"; } else { estado = "Cancelado"; }
-                        grid.Rows.Add(reservaActual[0], reservaActual[7], reservaActual[1], clienteActual[1], clienteActual[2], 
-                            clienteActual[3], estado);
+                        if (int.Parse(reservaActual[8]) != 0) {
+                            grid.Rows.Add(reservaActual[0], reservaActual[7], reservaActual[1], clienteActual[1], clienteActual[2],
+                            clienteActual[3], "Cancelado");
+                        }
                     }
                 }
             }
@@ -201,7 +201,7 @@ namespace Gestor_de_hotel_las_karpass
                 }
                 else
                 {
-                    clientePais.Add(clienteActual[4],1);
+                    clientePais.Add(clienteActual[4], 1);
                 }
             }
             Series nuevaSerie = new Series("Clientes por país");
@@ -212,6 +212,8 @@ namespace Gestor_de_hotel_las_karpass
                 string nombre = llave.Key;
                 int valor = llave.Value;
 
+                nombre += " ( " + valor.ToString() + " Clientes )";
+
                 nuevaSerie.Points.AddXY(nombre, valor);
             }
             grafico.Series.Add(nuevaSerie);
@@ -221,7 +223,7 @@ namespace Gestor_de_hotel_las_karpass
         public string obtenerNombreRe(string id)
         {
             List<List<string>> empleados = obtenerEmpleado();
-            for(int i = 0; i < empleados.Count; i++)
+            for (int i = 0; i < empleados.Count; i++)
             {
                 List<string> empleadoActual = empleados[i];
                 if (empleadoActual[0] == id)
@@ -272,6 +274,8 @@ namespace Gestor_de_hotel_las_karpass
                 string nombre = llave.Key;
                 int valor = llave.Value;
 
+                nombre += " ( " + valor.ToString() + " Reservas )";
+
                 nuevaSerie.Points.AddXY(nombre, valor);
             }
             grafico.Series.Add(nuevaSerie);
@@ -291,8 +295,8 @@ namespace Gestor_de_hotel_las_karpass
             List<List<string>> reservas = obtenerReservas();
             int cont = 0;
             while (fechaFin <= fechaActual)
-            { 
-                for(int i = 0; i < reservas.Count; i++)
+            {
+                for (int i = 0; i < reservas.Count; i++)
                 {
                     List<string> reservaActual = reservas[i];
                     if (DateTime.Parse(reservaActual[2]) >= fechaInicio && DateTime.Parse(reservaActual[2]) < fechaFin)
@@ -301,13 +305,13 @@ namespace Gestor_de_hotel_las_karpass
                     }
                 }
                 reservasPorRango.Add(fechaInicio, cont);
-
+                cont = 0;
                 fechaInicio = fechaFin;
                 fechaFin = fechaInicio.Add(intervalo);
             }
 
             Series nuevaSerie = new Series("Reservas en rangos de 3 meses");
-            nuevaSerie.ChartType = SeriesChartType.Pie;
+            nuevaSerie.ChartType = SeriesChartType.Column;
 
             foreach (var llave in reservasPorRango)
             {
@@ -343,19 +347,21 @@ namespace Gestor_de_hotel_las_karpass
                     }
                 }
                 ingresosPorRango.Add(fechaInicio, monto);
-
+                monto = 0;
                 fechaInicio = fechaFin;
                 fechaFin = fechaInicio.Add(intervalo);
             }
 
             Series nuevaSerie = new Series("Ingresos totales por rangos de 3 meses");
-            nuevaSerie.ChartType = SeriesChartType.Pie;
+            nuevaSerie.ChartType = SeriesChartType.Bar;
 
             foreach (var llave in ingresosPorRango)
             {
                 string nombre = llave.Key.ToString();
                 decimal valor = llave.Value;
 
+                // DateTime fechafin = llave.Key;
+                // nombre += " - " + fechafin.Add(intervalo).ToString() + " (" + valor.ToString() + ")";
                 nuevaSerie.Points.AddXY(nombre, valor);
             }
             grafico.Series.Add(nuevaSerie);
@@ -391,10 +397,16 @@ namespace Gestor_de_hotel_las_karpass
                 string nombre = llave.Key;
                 int valor = llave.Value;
 
+                nombre += " ( " + valor.ToString() + " Reservaciones )";
                 nuevaSerie.Points.AddXY(nombre, valor);
             }
             grafico.Series.Add(nuevaSerie);
             grafico.Visible = true;
+        }
+
+        private void grafico_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
