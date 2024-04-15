@@ -49,6 +49,7 @@ namespace Gestor_de_hotel_las_karpass
             this.labelPrecioDetalles = new System.Windows.Forms.Label();
             this.buttonFiltroCancelaciones = new System.Windows.Forms.Button();
             this.buttonMostrarTodo = new System.Windows.Forms.Button();
+            this.buttonConfirmarCancelacion = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantPersonas)).BeginInit();
             this.SuspendLayout();
@@ -56,12 +57,13 @@ namespace Gestor_de_hotel_las_karpass
             // BtEliminar
             // 
             this.BtEliminar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtEliminar.Location = new System.Drawing.Point(835, 542);
+            this.BtEliminar.Location = new System.Drawing.Point(700, 542);
             this.BtEliminar.Name = "BtEliminar";
-            this.BtEliminar.Size = new System.Drawing.Size(129, 38);
+            this.BtEliminar.Size = new System.Drawing.Size(98, 38);
             this.BtEliminar.TabIndex = 4;
             this.BtEliminar.Text = "CANCELAR";
             this.BtEliminar.UseVisualStyleBackColor = true;
+            this.BtEliminar.Click += new System.EventHandler(this.BtEliminar_Click);
             // 
             // DataViewReservas
             // 
@@ -125,7 +127,7 @@ namespace Gestor_de_hotel_las_karpass
             this.BtGuardar.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.BtGuardar.Location = new System.Drawing.Point(492, 542);
             this.BtGuardar.Name = "BtGuardar";
-            this.BtGuardar.Size = new System.Drawing.Size(119, 38);
+            this.BtGuardar.Size = new System.Drawing.Size(93, 38);
             this.BtGuardar.TabIndex = 20;
             this.BtGuardar.Text = "GUARDAR";
             this.BtGuardar.UseVisualStyleBackColor = true;
@@ -234,9 +236,9 @@ namespace Gestor_de_hotel_las_karpass
             // buttonModificar
             // 
             this.buttonModificar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.buttonModificar.Location = new System.Drawing.Point(662, 542);
+            this.buttonModificar.Location = new System.Drawing.Point(591, 542);
             this.buttonModificar.Name = "buttonModificar";
-            this.buttonModificar.Size = new System.Drawing.Size(129, 38);
+            this.buttonModificar.Size = new System.Drawing.Size(101, 38);
             this.buttonModificar.TabIndex = 45;
             this.buttonModificar.Text = "MODIFICAR";
             this.buttonModificar.UseVisualStyleBackColor = true;
@@ -274,11 +276,23 @@ namespace Gestor_de_hotel_las_karpass
             this.buttonMostrarTodo.UseVisualStyleBackColor = true;
             this.buttonMostrarTodo.Click += new System.EventHandler(this.buttonMostrarTodo_Click);
             // 
+            // buttonConfirmarCancelacion
+            // 
+            this.buttonConfirmarCancelacion.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.buttonConfirmarCancelacion.Location = new System.Drawing.Point(804, 542);
+            this.buttonConfirmarCancelacion.Name = "buttonConfirmarCancelacion";
+            this.buttonConfirmarCancelacion.Size = new System.Drawing.Size(160, 38);
+            this.buttonConfirmarCancelacion.TabIndex = 49;
+            this.buttonConfirmarCancelacion.Text = "CONFIRMAR CANCELACION";
+            this.buttonConfirmarCancelacion.UseVisualStyleBackColor = true;
+            this.buttonConfirmarCancelacion.Click += new System.EventHandler(this.buttonConfirmarCancelacion_Click);
+            // 
             // ReservasForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 664);
+            this.Controls.Add(this.buttonConfirmarCancelacion);
             this.Controls.Add(this.buttonMostrarTodo);
             this.Controls.Add(this.buttonFiltroCancelaciones);
             this.Controls.Add(this.labelPrecioDetalles);
@@ -329,5 +343,6 @@ namespace Gestor_de_hotel_las_karpass
         private System.Windows.Forms.Label labelPrecioDetalles;
         private System.Windows.Forms.Button buttonFiltroCancelaciones;
         private System.Windows.Forms.Button buttonMostrarTodo;
+        private System.Windows.Forms.Button buttonConfirmarCancelacion;
     }
 }

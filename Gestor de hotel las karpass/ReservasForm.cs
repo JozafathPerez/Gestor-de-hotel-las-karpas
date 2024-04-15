@@ -6,8 +6,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Net.Configuration;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,10 +27,11 @@ namespace Gestor_de_hotel_las_karpass
         private double precioReserva;
         private DateTime inicioReserva;
         private DateTime finReserva;
-        private const int EDICION = 1;
-        private const int LECTURA = 2;
+        private const int ADMINISTRADOR = 1;
+        private const int RECEPCIONISTA = 2;
+        private const int CONTROL_PLATAFORMA = 3;
         private List<(int numero, double precio, string tipo, int maxPersonas)> habitacionesSeleccionadas;
-
+        private int permisos;
 
         // Inicio del sub-menu
         public ReservasForm(int idEmpleado)
@@ -45,9 +48,50 @@ namespace Gestor_de_hotel_las_karpass
             datePickerFin.MinDate = finReserva;
             datePickerFin.Value = finReserva;
             numericCantPersonas.Value = 1;
+            buttonConfirmarCancelacion.Hide();
             ActualizarDataView();
             ActualizarClientesCombobox();
             ActualizarHabitacionesDisponibles();
+        }
+
+        /// <summary>
+        /// Valida los permisos del usuario actual y bloquea las funciones a las que no tiene acceso
+        /// </summary>
+        private void ValidarPermisos()
+        {
+            // obtener permisos
+            try
+            {
+                conexion.abrir();
+                string query =
+                    "SELECT e.idRol" +
+                    "FROM Empleados e " +
+                    "WHERE e.idEmpleado = @idEmpleado";
+                SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
+                command.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                permisos = (int) command.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener los persmisos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.cerrar();
+            }
+
+            // bloquear funciones base
+            if (permisos == CONTROL_PLATAFORMA)
+            {
+                buttonModificar.Enabled = false;
+                BtGuardar.Enabled = false;
+                BtEliminar.Enabled = false;
+            } else
+            {
+                buttonModificar.Enabled = true;
+                BtEliminar.Enabled = true;
+                BtGuardar.Enabled = true;
+            }
         }
 
         /**
@@ -485,6 +529,37 @@ namespace Gestor_de_hotel_las_karpass
         }
 
         private void buttonMostrarTodo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtEliminar_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        public void SolicitarCancelacion(int numeroReserva)
+        {
+            try
+            {
+                conexion.abrir();
+                string query =
+                    "UPDATE Reservas " +
+                    "SET cancelacionPendiente = 1, " +
+                    "fechaCancelacion = @fechaActual " +
+                    "WHERE numeroReserva = @numeroReserva";
+                SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
+                command.Parameters.AddWithValue("@fechaActual", DateTime.Now);
+                command.Parameters.AddWithValue("@numeroReserva", numeroReserva);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al solicitar la cancelacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonConfirmarCancelacion_Click(object sender, EventArgs e)
         {
 
         }
