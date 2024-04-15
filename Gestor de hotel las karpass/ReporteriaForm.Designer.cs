@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReporteriaForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.ImagenMenu = new System.Windows.Forms.PictureBox();
             this.BtReservas = new System.Windows.Forms.Button();
             this.btCancelaciones = new System.Windows.Forms.Button();
@@ -53,7 +53,7 @@
             this.ImagenMenu.Image = ((System.Drawing.Image)(resources.GetObject("ImagenMenu.Image")));
             this.ImagenMenu.Location = new System.Drawing.Point(-3, 0);
             this.ImagenMenu.Name = "ImagenMenu";
-            this.ImagenMenu.Size = new System.Drawing.Size(229, 514);
+            this.ImagenMenu.Size = new System.Drawing.Size(229, 566);
             this.ImagenMenu.TabIndex = 1;
             this.ImagenMenu.TabStop = false;
             // 
@@ -61,7 +61,7 @@
             // 
             this.BtReservas.BackColor = System.Drawing.Color.PapayaWhip;
             this.BtReservas.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtReservas.Location = new System.Drawing.Point(12, 211);
+            this.BtReservas.Location = new System.Drawing.Point(12, 230);
             this.BtReservas.Name = "BtReservas";
             this.BtReservas.Size = new System.Drawing.Size(204, 30);
             this.BtReservas.TabIndex = 2;
@@ -73,7 +73,7 @@
             // 
             this.btCancelaciones.BackColor = System.Drawing.Color.PapayaWhip;
             this.btCancelaciones.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btCancelaciones.Location = new System.Drawing.Point(12, 247);
+            this.btCancelaciones.Location = new System.Drawing.Point(12, 266);
             this.btCancelaciones.Name = "btCancelaciones";
             this.btCancelaciones.Size = new System.Drawing.Size(204, 30);
             this.btCancelaciones.TabIndex = 3;
@@ -85,7 +85,7 @@
             // 
             this.btClientesRe.BackColor = System.Drawing.Color.PapayaWhip;
             this.btClientesRe.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btClientesRe.Location = new System.Drawing.Point(12, 283);
+            this.btClientesRe.Location = new System.Drawing.Point(12, 302);
             this.btClientesRe.Name = "btClientesRe";
             this.btClientesRe.Size = new System.Drawing.Size(204, 30);
             this.btClientesRe.TabIndex = 4;
@@ -97,7 +97,7 @@
             // 
             this.btRecepcionista.BackColor = System.Drawing.Color.PapayaWhip;
             this.btRecepcionista.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btRecepcionista.Location = new System.Drawing.Point(12, 319);
+            this.btRecepcionista.Location = new System.Drawing.Point(12, 338);
             this.btRecepcionista.Name = "btRecepcionista";
             this.btRecepcionista.Size = new System.Drawing.Size(204, 60);
             this.btRecepcionista.TabIndex = 5;
@@ -109,7 +109,7 @@
             // 
             this.btFechasRe.BackColor = System.Drawing.Color.PapayaWhip;
             this.btFechasRe.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btFechasRe.Location = new System.Drawing.Point(12, 385);
+            this.btFechasRe.Location = new System.Drawing.Point(12, 404);
             this.btFechasRe.Name = "btFechasRe";
             this.btFechasRe.Size = new System.Drawing.Size(204, 30);
             this.btFechasRe.TabIndex = 6;
@@ -121,7 +121,7 @@
             // 
             this.btIngresos.BackColor = System.Drawing.Color.PapayaWhip;
             this.btIngresos.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btIngresos.Location = new System.Drawing.Point(12, 421);
+            this.btIngresos.Location = new System.Drawing.Point(12, 440);
             this.btIngresos.Name = "btIngresos";
             this.btIngresos.Size = new System.Drawing.Size(204, 30);
             this.btIngresos.TabIndex = 7;
@@ -133,7 +133,7 @@
             // 
             this.btClienteFre.BackColor = System.Drawing.Color.PapayaWhip;
             this.btClienteFre.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btClienteFre.Location = new System.Drawing.Point(12, 457);
+            this.btClienteFre.Location = new System.Drawing.Point(12, 476);
             this.btClienteFre.Name = "btClienteFre";
             this.btClienteFre.Size = new System.Drawing.Size(204, 30);
             this.btClienteFre.TabIndex = 8;
@@ -144,29 +144,30 @@
             // grid
             // 
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid.Location = new System.Drawing.Point(266, 34);
+            this.grid.Location = new System.Drawing.Point(252, 34);
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(496, 438);
+            this.grid.Size = new System.Drawing.Size(626, 518);
             this.grid.TabIndex = 9;
             // 
             // grafico
             // 
-            chartArea3.Name = "ChartArea1";
-            this.grafico.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.grafico.Legends.Add(legend3);
-            this.grafico.Location = new System.Drawing.Point(266, 34);
+            chartArea1.Name = "ChartArea1";
+            this.grafico.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.grafico.Legends.Add(legend1);
+            this.grafico.Location = new System.Drawing.Point(252, 34);
             this.grafico.Name = "grafico";
             this.grafico.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
-            this.grafico.Size = new System.Drawing.Size(496, 438);
+            this.grafico.Size = new System.Drawing.Size(626, 518);
             this.grafico.TabIndex = 10;
             this.grafico.Text = "chart1";
+            this.grafico.Click += new System.EventHandler(this.grafico_Click);
             // 
             // ReporteriaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 506);
+            this.ClientSize = new System.Drawing.Size(890, 564);
             this.Controls.Add(this.grafico);
             this.Controls.Add(this.grid);
             this.Controls.Add(this.btClienteFre);
