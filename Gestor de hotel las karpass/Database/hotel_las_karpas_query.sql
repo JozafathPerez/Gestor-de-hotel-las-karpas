@@ -192,3 +192,5 @@ ADD CONSTRAINT UQ_Correo UNIQUE (correo);
 -- Añadir atributo extra neccesario a tabla reservas
 ALTER TABLE hotel.dbo.Reservas
 ADD fechaCreacion DATE DEFAULT CURRENT_TIMESTAMP;
+
+SELECT * FROM Reservashabitacion

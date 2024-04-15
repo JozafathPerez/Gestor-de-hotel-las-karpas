@@ -25,12 +25,11 @@ namespace Gestor_de_hotel_las_karpass
         private double precioReserva;
         private DateTime inicioReserva;
         private DateTime finReserva;
-        private const int EDICION = 1;
-        private const int LECTURA = 2;
+        private const int ADMINISTRADOR = 1;
         private List<(int numero, double precio, string tipo, int maxPersonas)> habitacionesSeleccionadas;
         DateTime fechaCreacion;
 
-        public DetallesReservaForm(int numeroReserva)
+        public DetallesReservaForm(int numeroReserva, int permisos)
         {
             conexion = new ConexionBD();
             this.numeroReserva = numeroReserva;
@@ -42,6 +41,13 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarHabitacionesDisponibles();
             SeleccionarHabitaciones();
             ActualizarTotales();
+            if (permisos == ADMINISTRADOR) 
+            {
+                BtGuardar.Show();
+            } else
+            {
+                BtGuardar.Hide();
+            }
         }
 
         /**
@@ -238,6 +244,9 @@ namespace Gestor_de_hotel_las_karpass
             {
                 conexion.cerrar();
             }
+            SeleccionarHabitaciones();
+            ActualizarTotales();
+            normalizarNumericCantPersonas();
         }
 
         // SeleccionarHabitaciones
@@ -289,9 +298,9 @@ namespace Gestor_de_hotel_las_karpass
             double totalSinDescuento = precioReserva;
 
             // Aplicar descuentos
+            precioReserva = precioReserva - descuentoNochesGratis;
             precioReserva = precioReserva - (precioReserva * (descuentoCliente * 0.01));
             precioReserva = precioReserva - (precioReserva * (descuentoTemporada * 0.01));
-            precioReserva = precioReserva - descuentoNochesGratis;
 
             // Actualizar los labels
             string detallesString =
@@ -315,26 +324,31 @@ namespace Gestor_de_hotel_las_karpass
                 {
                     SeleccionarHabitaciones();
                     ActualizarTotales();
-                    if (cantMaxPersonas > 0)
-                    {
-                        numericCantPersonas.Maximum = cantMaxPersonas;
-                        numericCantPersonas.Minimum = 1;
-                        if (numericCantPersonas.Value == 0)
-                        {
-                            numericCantPersonas.Value = 1;
-                        }
-                    }
-                    else
-                    {
-                        numericCantPersonas.Maximum = cantMaxPersonas;
-                        numericCantPersonas.Minimum = 0;
-                        numericCantPersonas.Value = 0;
-                    }
+                    normalizarNumericCantPersonas();
                 }));
             }
             catch (InvalidOperationException) // Para cuando se cambien los checks mientras se crea la ventana
             {
                 return; // simplemente lo omitimos
+            }
+        }
+
+        private void normalizarNumericCantPersonas()
+        {
+            if (cantMaxPersonas > 0)
+            {
+                numericCantPersonas.Maximum = cantMaxPersonas;
+                numericCantPersonas.Minimum = 1;
+                if (numericCantPersonas.Value == 0)
+                {
+                    numericCantPersonas.Value = 1;
+                }
+            }
+            else
+            {
+                numericCantPersonas.Maximum = cantMaxPersonas;
+                numericCantPersonas.Minimum = 0;
+                numericCantPersonas.Value = 0;
             }
         }
 

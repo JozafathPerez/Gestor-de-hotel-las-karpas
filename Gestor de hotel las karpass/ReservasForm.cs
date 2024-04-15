@@ -47,9 +47,9 @@ namespace Gestor_de_hotel_las_karpass
             finReserva = System.DateTime.Today.AddDays(3);
             datePickerFin.MinDate = finReserva;
             datePickerFin.Value = finReserva;
-            numericCantPersonas.Value = 1;
             buttonConfirmarCancelacion.Hide();
-            ActualizarDataView();
+            ValidarPermisos();
+            ActualizarDataViewTodo();
             ActualizarClientesCombobox();
             ActualizarHabitacionesDisponibles();
         }
@@ -64,9 +64,9 @@ namespace Gestor_de_hotel_las_karpass
             {
                 conexion.abrir();
                 string query =
-                    "SELECT e.idRol" +
-                    "FROM Empleados e " +
-                    "WHERE e.idEmpleado = @idEmpleado";
+                    "SELECT idRol " +
+                    "FROM Empleados " +
+                    "WHERE idEmpleado = @idEmpleado";
                 SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
                 command.Parameters.AddWithValue("@idEmpleado", idEmpleado);
                 permisos = (int) command.ExecuteScalar();
@@ -193,8 +193,14 @@ namespace Gestor_de_hotel_las_karpass
 
 
         // Actualiza la tabla de informacion de las reservas
-        private void ActualizarDataView()
+        private void ActualizarDataViewTodo()
         {
+            // Bloquear/ activar funciones relacionadas
+            buttonModificar.Show();
+            BtEliminar.Show();
+            BtGuardar.Show();
+            buttonConfirmarCancelacion.Hide();
+
             conexion.abrir();
             string query = "SELECT numeroReserva AS [Num.], inicioReserva AS Inicio, finReserva AS Fin, " +
                            "cantPersonas AS Personas, costoTotal AS Costo, identificacionCliente AS Cliente, " +
@@ -210,6 +216,32 @@ namespace Gestor_de_hotel_las_karpass
             conexion.cerrar();
         }
 
+        private void ActualizarDataViewCancelaciones()
+        {
+            // Bloquear/ activar funciones relacionadas
+            buttonModificar.Hide();
+            BtEliminar.Hide();
+            BtGuardar.Hide();
+            if (permisos == ADMINISTRADOR)
+            {
+                buttonConfirmarCancelacion.Show();
+            }
+
+            // Actualziar dataview
+            conexion.abrir();
+            string query = "SELECT numeroReserva AS [Num.], inicioReserva AS Inicio, finReserva AS Fin, fechaCancelacion AS Cancelacion, " +
+                           "cantPersonas AS Personas, costoTotal AS Costo, identificacionCliente AS Cliente, " +
+                           "idEmpleado AS Encargado " +
+                           "FROM Reservas " +
+                           "WHERE cancelacionPendiente = 1 " +
+                           "ORDER BY numeroReserva DESC";
+            SqlCommand comando = new SqlCommand(query, conexion.ConectarBD);
+            SqlDataAdapter data = new SqlDataAdapter(comando);
+            DataTable tabla = new DataTable();
+            data.Fill(tabla);
+            DataViewReservas.DataSource = tabla;
+            conexion.cerrar();
+        }
 
         // Actualiza los valores que se pueden seleccionar de combo box de cliente
         private void ActualizarClientesCombobox()
@@ -250,15 +282,34 @@ namespace Gestor_de_hotel_las_karpass
             {
                 // Traer informacion de la base de datos
                 conexion.abrir();
-                string query =
-                    "SELECT DISTINCT h.numeroHabitacion, t.precio, t.nombreTipo, t.capacidadMax " +
-                    "FROM hotel.dbo.Habitaciones h " +
-                    "LEFT JOIN hotel.dbo.TiposHabitacion t ON h.idTipoHabitacion = t.idTipoHabitacion " +
-                    "LEFT JOIN hotel.dbo.Reservashabitacion rh ON h.numeroHabitacion = rh.numeroHabitacion " +
-                    "LEFT JOIN hotel.dbo.Reservas r ON rh.numeroReserva = r.numeroReserva " +
-                    $"WHERE r.numeroReserva IS NULL OR r.inicioReserva > '{finReserva.ToString("yyyy-MM-dd")}' " +
-                    $"OR r.finReserva < '{inicioReserva.ToString("yyyy-MM-dd")}'";
+                string query = @"
+                    SELECT DISTINCT h.numeroHabitacion, t.precio, t.nombreTipo, t.capacidadMax 
+                    FROM hotel.dbo.Habitaciones h 
+                    LEFT JOIN hotel.dbo.TiposHabitacion t ON h.idTipoHabitacion = t.idTipoHabitacion 
+                    WHERE h.numeroHabitacion NOT IN 
+                    (
+                        SELECT rh.numeroHabitacion 
+                        FROM hotel.dbo.Reservashabitacion rh 
+                        INNER JOIN hotel.dbo.Reservas r ON rh.numeroReserva = r.numeroReserva 
+                        WHERE 
+                        (
+                            r.inicioReserva <= @finReserva 
+                            AND r.finReserva >= @inicioReserva
+                        ) 
+                        OR 
+                        (
+                            r.finReserva >= @inicioReserva 
+                            AND r.inicioReserva <= @finReserva
+                        )
+                        OR
+                        (
+                            r.inicioReserva >= @inicioReserva 
+                            AND r.finReserva <= @finReserva
+                        )
+                    )";
                 SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
+                command.Parameters.AddWithValue("@inicioReserva", inicioReserva.ToString("yyyy-MM-dd"));
+                command.Parameters.AddWithValue("@finReserva", finReserva.ToString("yyyy-MM-dd"));
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -283,7 +334,9 @@ namespace Gestor_de_hotel_las_karpass
             {
                 conexion.cerrar();
             }
-
+            SeleccionarHabitaciones();
+            ActualizarTotales();
+            normalizarNumericCantPersonas();
         }
 
 
@@ -444,9 +497,8 @@ namespace Gestor_de_hotel_las_karpass
         private void LimpiarEntradas()
         {
             comboBoxCliente.Text = string.Empty;
-            datePickerInicio.Value = DateTime.Today;
-            datePickerFin.Value = DateTime.Today.AddDays(1);
-            numericCantPersonas.Value = 1;
+            datePickerInicio.Value = DateTime.Today.AddDays(2);
+            datePickerFin.Value = DateTime.Today.AddDays(3);
             ActualizarHabitacionesDisponibles();
             ActualizarTotales();
         }
@@ -461,7 +513,7 @@ namespace Gestor_de_hotel_las_karpass
             guardarReservasHabitacionBD(numReserva);
 
             LimpiarEntradas();
-            ActualizarDataView();
+            ActualizarDataViewTodo();
         }
 
         private void datePickerFin_ValueChanged(object sender, EventArgs e)
@@ -484,21 +536,27 @@ namespace Gestor_de_hotel_las_karpass
             {
                 SeleccionarHabitaciones();
                 ActualizarTotales();
-                if (cantMaxPersonas > 0)
-                {
-                    numericCantPersonas.Maximum = cantMaxPersonas;
-                    numericCantPersonas.Minimum = 1;
-                    if (numericCantPersonas.Value == 0)
-                    {
-                        numericCantPersonas.Value = 1;
-                    }
-                } else
-                {
-                    numericCantPersonas.Maximum = cantMaxPersonas;
-                    numericCantPersonas.Minimum = 0;
-                    numericCantPersonas.Value = 0;
-                }
+                normalizarNumericCantPersonas();
             }));
+        }
+
+        private void normalizarNumericCantPersonas()
+        {
+            if (cantMaxPersonas > 0)
+            {
+                numericCantPersonas.Maximum = cantMaxPersonas;
+                numericCantPersonas.Minimum = 1;
+                if (numericCantPersonas.Value == 0)
+                {
+                    numericCantPersonas.Value = 1;
+                }
+            }
+            else
+            {
+                numericCantPersonas.Maximum = cantMaxPersonas;
+                numericCantPersonas.Minimum = 0;
+                numericCantPersonas.Value = 0;
+            }
         }
 
         private void numericCantPersonas_ValueChanged(object sender, EventArgs e)
@@ -515,9 +573,9 @@ namespace Gestor_de_hotel_las_karpass
                 return;
             }
             int idReserva = (int) DataViewReservas.SelectedRows[0].Cells[0].Value;
-            DetallesReservaForm detallesReservaForm = new DetallesReservaForm(idReserva);
+            DetallesReservaForm detallesReservaForm = new DetallesReservaForm(idReserva, permisos);
             DialogResult dialogResult = detallesReservaForm.ShowDialog();
-            ActualizarDataView();
+            ActualizarDataViewTodo();
             ActualizarHabitacionesDisponibles();
         }
 
@@ -530,12 +588,19 @@ namespace Gestor_de_hotel_las_karpass
 
         private void buttonMostrarTodo_Click(object sender, EventArgs e)
         {
-
+            ActualizarDataViewTodo();
         }
 
         private void BtEliminar_Click(object sender, EventArgs e)
         {
-            
+            if (!(DataViewReservas.SelectedRows.Count == 1))
+            {
+                MessageBox.Show("Para realizar esta acción debe seleccionar UNA reserva", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            int idReserva = (int)DataViewReservas.SelectedRows[0].Cells[0].Value;
+            SolicitarCancelacion(idReserva);
+            ActualizarDataViewTodo();
         }
 
         public void SolicitarCancelacion(int numeroReserva)
@@ -552,16 +617,69 @@ namespace Gestor_de_hotel_las_karpass
                 command.Parameters.AddWithValue("@fechaActual", DateTime.Now);
                 command.Parameters.AddWithValue("@numeroReserva", numeroReserva);
                 command.ExecuteNonQuery();
+                MessageBox.Show("La cancelacion ya esta en proceso, un administrador deberá cofirmarla", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al solicitar la cancelacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al solicitar la cancelacion: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ConfirmarCancelacion(int idReserva)
+        {
+            try
+            {
+                conexion.abrir();
+                // borrar reservas de habitaciones individuales
+                string query =
+                    "DELETE FROM ReservasHabitacion " +
+                    "WHERE numeroReserva = @numeroReserva";
+                SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
+                command.Parameters.AddWithValue("@fechaActual", DateTime.Now);
+                command.Parameters.AddWithValue("@numeroReserva", idReserva);
+                command.ExecuteNonQuery();
+
+                // borrar reserva principal
+                string query2 =
+                    "DELETE FROM Reservas " +
+                    "WHERE numeroReserva = @numeroReserva";
+                SqlCommand command2 = new SqlCommand(query2, conexion.ConectarBD);
+                command2.Parameters.AddWithValue("@fechaActual", DateTime.Now);
+                command2.Parameters.AddWithValue("@numeroReserva", idReserva);
+                command2.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al solicitar la cancelacion: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonConfirmarCancelacion_Click(object sender, EventArgs e)
         {
+            if (!(DataViewReservas.SelectedRows.Count == 1))
+            {
+                MessageBox.Show("Para realizar esta acción debe seleccionar UNA reserva", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            int idReserva = (int)DataViewReservas.SelectedRows[0].Cells[0].Value;
+            DialogResult result = MessageBox.Show("¿Estás seguro de que desea cancelar esta reserva (se eliminaran todos sus datos)?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            // Comprobar la respuesta del usuario
+            if (result == DialogResult.Yes)
+            {
+                ConfirmarCancelacion(idReserva);
+                ActualizarDataViewCancelaciones();
+                ActualizarHabitacionesDisponibles();
+            }
+        }
 
+        private void ReservasForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonFiltroCancelaciones_Click(object sender, EventArgs e)
+        {
+            ActualizarDataViewCancelaciones();
         }
     }
 }

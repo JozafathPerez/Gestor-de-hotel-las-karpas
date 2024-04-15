@@ -264,6 +264,7 @@ namespace Gestor_de_hotel_las_karpass
             this.buttonFiltroCancelaciones.TabIndex = 47;
             this.buttonFiltroCancelaciones.Text = "mostrar cancelaciones";
             this.buttonFiltroCancelaciones.UseVisualStyleBackColor = true;
+            this.buttonFiltroCancelaciones.Click += new System.EventHandler(this.buttonFiltroCancelaciones_Click);
             // 
             // buttonMostrarTodo
             // 
@@ -315,6 +316,7 @@ namespace Gestor_de_hotel_las_karpass
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ReservasForm";
             this.Text = "ReservasForm";
+            this.Load += new System.EventHandler(this.ReservasForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantPersonas)).EndInit();
             this.ResumeLayout(false);
