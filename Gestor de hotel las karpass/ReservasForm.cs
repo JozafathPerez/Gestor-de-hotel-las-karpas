@@ -38,10 +38,10 @@ namespace Gestor_de_hotel_las_karpass
             conexion = new ConexionBD();
             funcionesAux = new FuncionesAux(conexion);
             habitacionesSeleccionadas = new List<(int numero, double precio, string tipo, int maxPersonas)>();
-            inicioReserva = System.DateTime.Today;
+            inicioReserva = System.DateTime.Today.AddDays(2);
             datePickerInicio.MinDate = inicioReserva;
             datePickerInicio.Value = inicioReserva;
-            finReserva = System.DateTime.Today.AddDays(1);
+            finReserva = System.DateTime.Today.AddDays(3);
             datePickerFin.MinDate = finReserva;
             datePickerFin.Value = finReserva;
             numericCantPersonas.Value = 1;
@@ -50,6 +50,77 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarHabitacionesDisponibles();
         }
 
+        /**
+         * Calcula el descuento y devuelve el descuento de segun la temporada que se encuentre
+         * el día actual.
+         */
+        private int DescuentoTemporada()
+        {
+            DateTime fecha = DateTime.Today;
+
+            // Definir las fechas de inicio y fin para cada temporada
+            DateTime inicioTemporadaAlta = new DateTime(fecha.Year, 6, 15);
+            DateTime finTemporadaAlta = new DateTime(fecha.Year, 9, 14);
+            DateTime inicioTemporadaMedia = new DateTime(fecha.Year, 9, 15);
+            DateTime finTemporadaMedia = new DateTime(fecha.Year, 2, 14);
+            DateTime inicioTemporadaBaja = new DateTime(fecha.Year, 2, 15);
+            DateTime finTemporadaBaja = new DateTime(fecha.Year, 6, 14);
+
+            // Determinar en qué temporada se encuentra la reserva
+            int descuento = 0;
+            if (inicioTemporadaAlta <= fecha && fecha <= finTemporadaAlta)
+                descuento = 0;
+            else if (inicioTemporadaMedia <= fecha && fecha <= finTemporadaMedia)
+                descuento = 30;
+            else if (inicioTemporadaBaja <= fecha && fecha <= finTemporadaBaja)
+                descuento = 40;
+
+            return descuento;
+        }
+
+        /// <summary>
+        /// Calcula el descuento basado en las reservas que realizó un cliente en el año.
+        /// </summary>
+        /// <param name="idCliente">identificacion del cliente para buscarlo en la BD</param>
+        /// <returns>tupla con forma (descuento, noches_gratis). El descuento es un multiplicador de 0-1</returns>
+        private (int, int) DescuentoClienteFrecuente(Decimal idCliente)
+        {
+            int descuento = 0;
+            int nochesGratis = 0;
+            try
+            {
+                conexion.abrir();
+                string query =
+                    "SELECT COUNT(identificacionCliente) " +
+                    "FROM Reservas " +
+                    "WHERE identificacionCliente = @identificacionCliente ";
+                SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
+                command.Parameters.AddWithValue("@identificacionCliente", idCliente);
+                int cantReservas = (int)command.ExecuteScalar();
+
+                // Calcular descuentos
+                if (5 == cantReservas)
+                    descuento = 5;
+                else if (6 <= cantReservas && cantReservas <= 9)
+                    descuento = 10;
+                else if (cantReservas >= 10)
+                {
+                    nochesGratis = (int)Math.Floor((double)(cantReservas / 10));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al calcular descuento por cantidad de reservas: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                descuento = 0;
+                nochesGratis = 0;
+            }
+            finally
+            {
+                conexion.cerrar();
+            }
+
+            return (descuento, nochesGratis);
+        }
 
         // SeleccionarHabitaciones
         // Actualiza la lista de Habitaciones selccionadas
@@ -141,8 +212,8 @@ namespace Gestor_de_hotel_las_karpass
                     "LEFT JOIN hotel.dbo.TiposHabitacion t ON h.idTipoHabitacion = t.idTipoHabitacion " +
                     "LEFT JOIN hotel.dbo.Reservashabitacion rh ON h.numeroHabitacion = rh.numeroHabitacion " +
                     "LEFT JOIN hotel.dbo.Reservas r ON rh.numeroReserva = r.numeroReserva " +
-                    $"WHERE (r.numeroReserva IS NULL OR (r.inicioReserva > '{finReserva.ToString("yyyy-MM-dd")}' " +
-                    $"OR r.finReserva < '{inicioReserva.ToString("yyyy-MM-dd")}'))";
+                    $"WHERE r.numeroReserva IS NULL OR r.inicioReserva > '{finReserva.ToString("yyyy-MM-dd")}' " +
+                    $"OR r.finReserva < '{inicioReserva.ToString("yyyy-MM-dd")}'";
                 SqlCommand command = new SqlCommand(query, conexion.ConectarBD);
 
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -184,10 +255,32 @@ namespace Gestor_de_hotel_las_karpass
                 cantMaxPersonas += habitacionesSeleccionadas[i].maxPersonas;
             }
 
+            // Calcular Descuentos
+            (int descuentoCliente, int nochesGratis) = DescuentoClienteFrecuente(idCliente);
+            int descuentoTemporada = DescuentoTemporada();
+            double descuentoNochesGratis = precioReserva * nochesGratis;
+
+            // Calcular por noches
             int noches = (finReserva - inicioReserva).Days;
             precioReserva *= noches < 0 ? noches * -1 : noches;
 
+            double totalSinDescuento = precioReserva;
+
+            // Aplicar descuentos
+            precioReserva = precioReserva - descuentoNochesGratis;
+            precioReserva = precioReserva - (precioReserva * (descuentoCliente * 0.01));
+            precioReserva = precioReserva - (precioReserva * (descuentoTemporada * 0.01));
+
             // Actualizar los labels
+            string detallesString =
+                $"${totalSinDescuento}";
+            if (descuentoCliente > 0)
+                detallesString += $"\r\n-{descuentoCliente}% (cliente frecuente)";
+            if (descuentoTemporada > 0)
+                detallesString += $"\r\n-{descuentoTemporada}% (temporada)";
+            if (nochesGratis > 0)
+                detallesString += $"\r\n-{nochesGratis} noches gratis";
+            labelPrecioDetalles.Text = detallesString;
             labelCantPersonasMax.Text = "MAX " + cantMaxPersonas.ToString();
             labelPrecioTotal.Text = "Total: $" + precioReserva.ToString();
         }
@@ -330,12 +423,14 @@ namespace Gestor_de_hotel_las_karpass
         private void datePickerFin_ValueChanged(object sender, EventArgs e)
         {
             finReserva = datePickerFin.Value;
+            ActualizarHabitacionesDisponibles();
             ActualizarTotales();
         }
 
         private void datePickerInicio_ValueChanged(object sender, EventArgs e)
         {
             inicioReserva = datePickerInicio.Value;
+            ActualizarHabitacionesDisponibles();
             ActualizarTotales();
         }
 
@@ -345,8 +440,20 @@ namespace Gestor_de_hotel_las_karpass
             {
                 SeleccionarHabitaciones();
                 ActualizarTotales();
-                numericCantPersonas.Minimum = 1;
-                numericCantPersonas.Maximum = cantMaxPersonas;
+                if (cantMaxPersonas > 0)
+                {
+                    numericCantPersonas.Maximum = cantMaxPersonas;
+                    numericCantPersonas.Minimum = 1;
+                    if (numericCantPersonas.Value == 0)
+                    {
+                        numericCantPersonas.Value = 1;
+                    }
+                } else
+                {
+                    numericCantPersonas.Maximum = cantMaxPersonas;
+                    numericCantPersonas.Minimum = 0;
+                    numericCantPersonas.Value = 0;
+                }
             }));
         }
 
@@ -368,6 +475,18 @@ namespace Gestor_de_hotel_las_karpass
             DialogResult dialogResult = detallesReservaForm.ShowDialog();
             ActualizarDataView();
             ActualizarHabitacionesDisponibles();
+        }
+
+        private void comboBoxCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string clienteString = comboBoxCliente.Text.Split(':')[0];
+            Int64.TryParse(clienteString, out idCliente);
+            ActualizarTotales();
+        }
+
+        private void buttonMostrarTodo_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

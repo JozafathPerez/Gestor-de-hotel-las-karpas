@@ -62,6 +62,7 @@ CREATE TABLE hotel.dbo.Reservas (
 	costoTotal DECIMAL(10,2),
 	idEmpleado INT NOT NULL,
 	cancelacionPendiente BIT DEFAULT 0,
+	fechaCreacion DATE DEFAULT CURRENT_TIMESTAMP,
 	);
 
 CREATE TABLE hotel.dbo.Reservashabitacion (
@@ -187,3 +188,7 @@ ADD CONSTRAINT FK_Clientes FOREIGN KEY (identificacionCliente) REFERENCES Client
 -- Hace que la columna correo en la tabla de empleados sea unico
 ALTER TABLE hotel.dbo.Empleados
 ADD CONSTRAINT UQ_Correo UNIQUE (correo);
+
+-- Añadir atributo extra neccesario a tabla reservas
+ALTER TABLE hotel.dbo.Reservas
+ADD fechaCreacion DATE DEFAULT CURRENT_TIMESTAMP;

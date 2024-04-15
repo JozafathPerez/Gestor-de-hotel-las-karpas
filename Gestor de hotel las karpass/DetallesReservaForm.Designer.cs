@@ -43,6 +43,7 @@
             this.BtGuardar = new System.Windows.Forms.Button();
             this.labelNumReserva = new System.Windows.Forms.Label();
             this.labelEncargado = new System.Windows.Forms.Label();
+            this.labelPrecioDetalles = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantPersonas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,7 +96,7 @@
             // 
             this.labelPrecioTotal.AutoSize = true;
             this.labelPrecioTotal.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.labelPrecioTotal.Location = new System.Drawing.Point(47, 434);
+            this.labelPrecioTotal.Location = new System.Drawing.Point(47, 487);
             this.labelPrecioTotal.Name = "labelPrecioTotal";
             this.labelPrecioTotal.Size = new System.Drawing.Size(81, 25);
             this.labelPrecioTotal.TabIndex = 54;
@@ -126,7 +127,7 @@
             // 
             this.datePickerFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.datePickerFin.Location = new System.Drawing.Point(309, 96);
-            this.datePickerFin.MinDate = new System.DateTime(2024, 4, 13, 0, 0, 0, 0);
+            this.datePickerFin.MinDate = new System.DateTime(2024, 3, 25, 0, 0, 0, 0);
             this.datePickerFin.Name = "datePickerFin";
             this.datePickerFin.Size = new System.Drawing.Size(96, 20);
             this.datePickerFin.TabIndex = 51;
@@ -137,7 +138,7 @@
             // 
             this.datePickerInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.datePickerInicio.Location = new System.Drawing.Point(115, 95);
-            this.datePickerInicio.MinDate = new System.DateTime(2024, 4, 12, 0, 0, 0, 0);
+            this.datePickerInicio.MinDate = new System.DateTime(2024, 3, 25, 0, 0, 0, 0);
             this.datePickerInicio.Name = "datePickerInicio";
             this.datePickerInicio.Size = new System.Drawing.Size(96, 20);
             this.datePickerInicio.TabIndex = 50;
@@ -187,7 +188,7 @@
             // BtGuardar
             // 
             this.BtGuardar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtGuardar.Location = new System.Drawing.Point(143, 474);
+            this.BtGuardar.Location = new System.Drawing.Point(143, 527);
             this.BtGuardar.Name = "BtGuardar";
             this.BtGuardar.Size = new System.Drawing.Size(160, 40);
             this.BtGuardar.TabIndex = 45;
@@ -215,11 +216,23 @@
             this.labelEncargado.TabIndex = 59;
             this.labelEncargado.Text = "Encargado: 123\r\n";
             // 
+            // labelPrecioDetalles
+            // 
+            this.labelPrecioDetalles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelPrecioDetalles.AutoSize = true;
+            this.labelPrecioDetalles.Location = new System.Drawing.Point(53, 435);
+            this.labelPrecioDetalles.Name = "labelPrecioDetalles";
+            this.labelPrecioDetalles.Size = new System.Drawing.Size(112, 52);
+            this.labelPrecioDetalles.TabIndex = 60;
+            this.labelPrecioDetalles.Text = "$0\r\n-0% (cliente frecuente)\r\n-0% (temporada)\r\n-0 noches gratis";
+            this.labelPrecioDetalles.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
             // DetallesReservaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 536);
+            this.ClientSize = new System.Drawing.Size(463, 588);
+            this.Controls.Add(this.labelPrecioDetalles);
             this.Controls.Add(this.labelEncargado);
             this.Controls.Add(this.labelNumReserva);
             this.Controls.Add(this.labelCantPersonasMax);
@@ -260,5 +273,6 @@
         private System.Windows.Forms.Button BtGuardar;
         private System.Windows.Forms.Label labelNumReserva;
         private System.Windows.Forms.Label labelEncargado;
+        private System.Windows.Forms.Label labelPrecioDetalles;
     }
 }

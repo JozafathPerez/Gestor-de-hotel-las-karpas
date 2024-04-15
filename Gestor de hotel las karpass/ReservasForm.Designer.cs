@@ -46,6 +46,9 @@ namespace Gestor_de_hotel_las_karpass
             this.numericCantPersonas = new System.Windows.Forms.NumericUpDown();
             this.labelCantPersonasMax = new System.Windows.Forms.Label();
             this.buttonModificar = new System.Windows.Forms.Button();
+            this.labelPrecioDetalles = new System.Windows.Forms.Label();
+            this.buttonFiltroCancelaciones = new System.Windows.Forms.Button();
+            this.buttonMostrarTodo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataViewReservas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantPersonas)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +56,7 @@ namespace Gestor_de_hotel_las_karpass
             // BtEliminar
             // 
             this.BtEliminar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtEliminar.Location = new System.Drawing.Point(835, 536);
+            this.BtEliminar.Location = new System.Drawing.Point(835, 542);
             this.BtEliminar.Name = "BtEliminar";
             this.BtEliminar.Size = new System.Drawing.Size(129, 38);
             this.BtEliminar.TabIndex = 4;
@@ -70,11 +73,11 @@ namespace Gestor_de_hotel_las_karpass
             this.DataViewReservas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataViewReservas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DataViewReservas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
-            this.DataViewReservas.Location = new System.Drawing.Point(492, 38);
+            this.DataViewReservas.Location = new System.Drawing.Point(492, 65);
             this.DataViewReservas.Name = "DataViewReservas";
             this.DataViewReservas.ReadOnly = true;
             this.DataViewReservas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DataViewReservas.Size = new System.Drawing.Size(472, 477);
+            this.DataViewReservas.Size = new System.Drawing.Size(472, 462);
             this.DataViewReservas.TabIndex = 3;
             // 
             // label
@@ -120,9 +123,9 @@ namespace Gestor_de_hotel_las_karpass
             // BtGuardar
             // 
             this.BtGuardar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.BtGuardar.Location = new System.Drawing.Point(64, 536);
+            this.BtGuardar.Location = new System.Drawing.Point(492, 542);
             this.BtGuardar.Name = "BtGuardar";
-            this.BtGuardar.Size = new System.Drawing.Size(160, 40);
+            this.BtGuardar.Size = new System.Drawing.Size(119, 38);
             this.BtGuardar.TabIndex = 20;
             this.BtGuardar.Text = "GUARDAR";
             this.BtGuardar.UseVisualStyleBackColor = true;
@@ -160,6 +163,7 @@ namespace Gestor_de_hotel_las_karpass
             this.comboBoxCliente.Name = "comboBoxCliente";
             this.comboBoxCliente.Size = new System.Drawing.Size(291, 21);
             this.comboBoxCliente.TabIndex = 39;
+            this.comboBoxCliente.SelectedIndexChanged += new System.EventHandler(this.comboBoxCliente_SelectedIndexChanged);
             // 
             // checkedListHabitaciones
             // 
@@ -176,7 +180,7 @@ namespace Gestor_de_hotel_las_karpass
             // 
             this.labelPrecioTotal.AutoSize = true;
             this.labelPrecioTotal.Font = new System.Drawing.Font("Segoe UI", 14F);
-            this.labelPrecioTotal.Location = new System.Drawing.Point(59, 491);
+            this.labelPrecioTotal.Location = new System.Drawing.Point(59, 542);
             this.labelPrecioTotal.Name = "labelPrecioTotal";
             this.labelPrecioTotal.Size = new System.Drawing.Size(81, 25);
             this.labelPrecioTotal.TabIndex = 41;
@@ -230,7 +234,7 @@ namespace Gestor_de_hotel_las_karpass
             // buttonModificar
             // 
             this.buttonModificar.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.buttonModificar.Location = new System.Drawing.Point(700, 536);
+            this.buttonModificar.Location = new System.Drawing.Point(662, 542);
             this.buttonModificar.Name = "buttonModificar";
             this.buttonModificar.Size = new System.Drawing.Size(129, 38);
             this.buttonModificar.TabIndex = 45;
@@ -238,11 +242,46 @@ namespace Gestor_de_hotel_las_karpass
             this.buttonModificar.UseVisualStyleBackColor = true;
             this.buttonModificar.Click += new System.EventHandler(this.buttonModificar_Click);
             // 
+            // labelPrecioDetalles
+            // 
+            this.labelPrecioDetalles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelPrecioDetalles.AutoSize = true;
+            this.labelPrecioDetalles.Location = new System.Drawing.Point(61, 490);
+            this.labelPrecioDetalles.Name = "labelPrecioDetalles";
+            this.labelPrecioDetalles.Size = new System.Drawing.Size(112, 52);
+            this.labelPrecioDetalles.TabIndex = 46;
+            this.labelPrecioDetalles.Text = "$0\r\n-0% (cliente frecuente)\r\n-0% (temporada)\r\n-0 noches gratis";
+            this.labelPrecioDetalles.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // buttonFiltroCancelaciones
+            // 
+            this.buttonFiltroCancelaciones.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.buttonFiltroCancelaciones.Location = new System.Drawing.Point(835, 38);
+            this.buttonFiltroCancelaciones.Name = "buttonFiltroCancelaciones";
+            this.buttonFiltroCancelaciones.Size = new System.Drawing.Size(129, 21);
+            this.buttonFiltroCancelaciones.TabIndex = 47;
+            this.buttonFiltroCancelaciones.Text = "mostrar cancelaciones";
+            this.buttonFiltroCancelaciones.UseVisualStyleBackColor = true;
+            // 
+            // buttonMostrarTodo
+            // 
+            this.buttonMostrarTodo.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.buttonMostrarTodo.Location = new System.Drawing.Point(738, 38);
+            this.buttonMostrarTodo.Name = "buttonMostrarTodo";
+            this.buttonMostrarTodo.Size = new System.Drawing.Size(91, 21);
+            this.buttonMostrarTodo.TabIndex = 48;
+            this.buttonMostrarTodo.Text = "mostrar todo";
+            this.buttonMostrarTodo.UseVisualStyleBackColor = true;
+            this.buttonMostrarTodo.Click += new System.EventHandler(this.buttonMostrarTodo_Click);
+            // 
             // ReservasForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 664);
+            this.Controls.Add(this.buttonMostrarTodo);
+            this.Controls.Add(this.buttonFiltroCancelaciones);
+            this.Controls.Add(this.labelPrecioDetalles);
             this.Controls.Add(this.buttonModificar);
             this.Controls.Add(this.labelCantPersonasMax);
             this.Controls.Add(this.numericCantPersonas);
@@ -287,5 +326,8 @@ namespace Gestor_de_hotel_las_karpass
         private System.Windows.Forms.NumericUpDown numericCantPersonas;
         private System.Windows.Forms.Label labelCantPersonasMax;
         private System.Windows.Forms.Button buttonModificar;
+        private System.Windows.Forms.Label labelPrecioDetalles;
+        private System.Windows.Forms.Button buttonFiltroCancelaciones;
+        private System.Windows.Forms.Button buttonMostrarTodo;
     }
 }
