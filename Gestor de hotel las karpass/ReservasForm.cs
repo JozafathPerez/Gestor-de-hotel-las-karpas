@@ -33,7 +33,10 @@ namespace Gestor_de_hotel_las_karpass
         private List<(int numero, double precio, string tipo, int maxPersonas)> habitacionesSeleccionadas;
         private int permisos;
 
-        // Inicio del sub-menu
+        /// <summary>
+        /// Constructor de la clase ReservasForm.
+        /// </summary>
+        /// <param name="idEmpleado">Identificador del empleado que inicia sesión</param>
         public ReservasForm(int idEmpleado)
         {
             InitializeComponent();
@@ -94,10 +97,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /**
-         * Calcula el descuento y devuelve el descuento de segun la temporada que se encuentre
-         * el día actual.
-         */
+        /// <summary>
+        /// Calcula el descuento y devuelve el descuento de según la temporada que se encuentre el día actual.
+        /// </summary>
+        /// <returns>Descuento según la temporada</returns>
         private int DescuentoTemporada()
         {
             DateTime fecha = DateTime.Today;
@@ -166,8 +169,9 @@ namespace Gestor_de_hotel_las_karpass
             return (descuento, nochesGratis);
         }
 
-        // SeleccionarHabitaciones
-        // Actualiza la lista de Habitaciones selccionadas
+        /// <summary>
+        /// Actualiza la informacion interna de las habitaicones selccionadas en el checklist de habitaciones.
+        /// </summary>
         private void SeleccionarHabitaciones()
         {
             // limpiar la lista
@@ -191,8 +195,9 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-
-        // Actualiza la tabla de informacion de las reservas
+        /// <summary>
+        /// Actualiza la tabla de información de todas las reservas.
+        /// </summary>
         private void ActualizarDataViewTodo()
         {
             // Bloquear/ activar funciones relacionadas
@@ -216,6 +221,9 @@ namespace Gestor_de_hotel_las_karpass
             conexion.cerrar();
         }
 
+        /// <summary>
+        /// Actualiza la tabla de información de las cancelaciones.
+        /// </summary>
         private void ActualizarDataViewCancelaciones()
         {
             // Bloquear/ activar funciones relacionadas
@@ -243,7 +251,9 @@ namespace Gestor_de_hotel_las_karpass
             conexion.cerrar();
         }
 
-        // Actualiza los valores que se pueden seleccionar de combo box de cliente
+        /// <summary>
+        /// Actualiza los valores del combo box de clientes.
+        /// </summary>
         private void ActualizarClientesCombobox()
         {
             try
@@ -275,7 +285,9 @@ namespace Gestor_de_hotel_las_karpass
         }
 
 
-        // Actualiza el check list con las habitaciones disponibles a reservar en el rango de fecha seleccionado
+        /// <summary>
+        /// Actualiza el check list con las habitaciones disponibles para reservar.
+        /// </summary>
         private void ActualizarHabitacionesDisponibles()
         {
             try
@@ -339,7 +351,9 @@ namespace Gestor_de_hotel_las_karpass
             normalizarNumericCantPersonas();
         }
 
-
+        /// <summary>
+        /// Actualiza los totales del precio de la reserva.
+        /// </summary>
         private void ActualizarTotales()
         {
             precioReserva = 0;
@@ -382,7 +396,10 @@ namespace Gestor_de_hotel_las_karpass
             labelPrecioTotal.Text = "Total: $" + precioReserva.ToString();
         }
 
-
+        /// <summary>
+        /// Valida si los datos de la reserva son válidos.
+        /// </summary>
+        /// <returns>True si los datos son válidos, False si no lo son</returns>
         private bool datosReservaValidos()
         {
             // Validar formato del cliente
@@ -428,7 +445,10 @@ namespace Gestor_de_hotel_las_karpass
 
             return true;
         }
-
+        /// <summary>
+        /// Guarda la información de la reserva en la base de datos.
+        /// </summary>
+        /// <returns>El número de la reserva guardada</returns>
         private int guardarReservaBD()
         {
             try
@@ -464,6 +484,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Guarda las reservas de habitación en la base de datos.
+        /// </summary>
+        /// <param name="numReserva">Número de la reserva</param>
         private void guardarReservasHabitacionBD(int numReserva)
         {
             try
@@ -494,6 +518,9 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Limpia las entradas después de guardar una reserva.
+        /// </summary>
         private void LimpiarEntradas()
         {
             comboBoxCliente.Text = string.Empty;
@@ -503,7 +530,9 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarTotales();
         }
 
-        // Valida y guarda en la BD la informacion de la reserva
+        /// <summary>
+        /// Evento al hacer clic en el botón de guardar reserva.
+        /// </summary>
         private void BtGuardar_Click(object sender, EventArgs e)
         {
             if (!(datosReservaValidos())) return;
@@ -516,6 +545,9 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarDataViewTodo();
         }
 
+        /// <summary>
+        /// Evento al cambiar el valor del selector de fecha de fin.
+        /// </summary>
         private void datePickerFin_ValueChanged(object sender, EventArgs e)
         {
             finReserva = datePickerFin.Value;
@@ -523,6 +555,9 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarTotales();
         }
 
+        /// <summary>
+        /// Evento al cambiar el valor del selector de fecha de inicio.
+        /// </summary>
         private void datePickerInicio_ValueChanged(object sender, EventArgs e)
         {
             inicioReserva = datePickerInicio.Value;
@@ -530,6 +565,9 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarTotales();
         }
 
+        /// <summary>
+        /// Evento al marcar o desmarcar un elemento de la lista de habitaciones.
+        /// </summary>
         private void checkedListHabitaciones_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             BeginInvoke(new Action(() =>
@@ -540,6 +578,9 @@ namespace Gestor_de_hotel_las_karpass
             }));
         }
 
+        /// <summary>
+        /// Normaliza el valor del selector de cantidad de personas.
+        /// </summary>
         private void normalizarNumericCantPersonas()
         {
             if (cantMaxPersonas > 0)
@@ -559,12 +600,17 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Evento al cambiar el valor del selector de cantidad de personas.
+        /// </summary>
         private void numericCantPersonas_ValueChanged(object sender, EventArgs e)
         {
             cantPersonas = (int)numericCantPersonas.Value;
         }
 
-        // abre una ventana con los detalles de la reserva seleccionada para poder ser modificados
+        /// <summary>
+        /// Abre una ventana con los detalles de la reserva seleccionada para modificarla.
+        /// </summary>
         private void buttonModificar_Click(object sender, EventArgs e)
         {
             if (!(DataViewReservas.SelectedRows.Count == 1))
@@ -579,6 +625,9 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarHabitacionesDisponibles();
         }
 
+        /// <summary>
+        /// Evento al cambiar la selección en el combo box de cliente.
+        /// </summary>
         private void comboBoxCliente_SelectedIndexChanged(object sender, EventArgs e)
         {
             string clienteString = comboBoxCliente.Text.Split(':')[0];
@@ -586,11 +635,17 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarTotales();
         }
 
+        /// <summary>
+        /// Evento al hacer clic en el botón para mostrar todas las reservas.
+        /// </summary>
         private void buttonMostrarTodo_Click(object sender, EventArgs e)
         {
             ActualizarDataViewTodo();
         }
 
+        /// <summary>
+        /// Evento al hacer clic en el botón de cancelar reserva (solicitud).
+        /// </summary>
         private void BtEliminar_Click(object sender, EventArgs e)
         {
             if (!(DataViewReservas.SelectedRows.Count == 1))
@@ -603,6 +658,10 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarDataViewTodo();
         }
 
+        /// <summary>
+        /// Solicita la cancelación de una reserva.
+        /// </summary>
+        /// <param name="numeroReserva">Número de la reserva</param>
         public void SolicitarCancelacion(int numeroReserva)
         {
             try
@@ -625,6 +684,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Confirma la cancelación de una reserva.
+        /// </summary>
+        /// <param name="idReserva">ID de la reserva</param>
         private void ConfirmarCancelacion(int idReserva)
         {
             try
@@ -654,6 +717,9 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Evento al hacer clic en el botón de confirmar cancelación.
+        /// </summary>
         private void buttonConfirmarCancelacion_Click(object sender, EventArgs e)
         {
             if (!(DataViewReservas.SelectedRows.Count == 1))
@@ -672,11 +738,17 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Evento al cargar el formulario de reservas.
+        /// </summary>
         private void ReservasForm_Load(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Evento al hacer clic en el botón de filtro de cancelaciones.
+        /// </summary>
         private void buttonFiltroCancelaciones_Click(object sender, EventArgs e)
         {
             ActualizarDataViewCancelaciones();
