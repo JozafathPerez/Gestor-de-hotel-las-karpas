@@ -36,7 +36,7 @@ CREATE TABLE hotel.dbo.Empleados (
 	idRol INT NOT NULL,
 	genero VARCHAR(31),
 	telefono DECIMAL(15),
-	correo VARCHAR(320),
+	correo VARCHAR(320) UNIQUE,
 	contrasena VARCHAR(255),
 	ultimaModificacion DATETIME DEFAULT CURRENT_TIMESTAMP,
 	fechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -148,47 +148,3 @@ VALUES
   ('Carlos', 'Lopez', 'Diaz', 'Chile', 'Calle Santiago 321', '1978-12-03', 56987654321, 'carlos.lopez@example.com');
 
 SELECT identificacionCliente, nombre + ' ' + primerApellido AS nombreCompleto FROM Clientes ORDER BY nombreCompleto ASC
-
--- PARA LOS ERRORES CON LA IDENTIFICACION DE CLIENTE (si se tiene la version anterior de la BD)
-
--- Eliminar las columnas de direccion y fechaNacimiento
-ALTER TABLE hotel.dbo.Clientes
-DROP COLUMN direccion;
-
-ALTER TABLE hotel.dbo.Clientes
-DROP COLUMN fechaNacimiento;
-
--- Eliminar la restricci�n de clave externa que referencia la tabla Clientes desde la tabla Reservas
-ALTER TABLE hotel.dbo.Reservas
-DROP CONSTRAINT FK_Clientes;
-
--- Eliminar la base de datos 
-DROP TABLE hotel.dbo.Clientes;
-
--- Crear una nueva tabla sin la propiedad del autoincrementable
-CREATE TABLE hotel.dbo.Clientes (
-    identificacionCliente DECIMAL(18, 0) NOT NULL,  -- Cambiar el tipo de dato si es necesario
-    nombre VARCHAR(127),
-    primerApellido VARCHAR(127),
-    segundoApellido VARCHAR(127),
-    paisProcedencia VARCHAR(127),
-    telefono DECIMAL(15),
-    correo VARCHAR(320),
-    PRIMARY KEY (identificacionCliente) 
-);
-
--- Cambiar el tipo de dato en reservas para relacionar con la reserva
-ALTER TABLE hotel.dbo.Reservas
-ALTER COLUMN identificacionCliente DECIMAL(18,0) NOT NULL
-
--- Volver a crear la realcion de Reservas
-ALTER TABLE hotel.dbo.Reservas
-ADD CONSTRAINT FK_Clientes FOREIGN KEY (identificacionCliente) REFERENCES Clientes(identificacionCliente);
-
--- Hace que la columna correo en la tabla de empleados sea unico
-ALTER TABLE hotel.dbo.Empleados
-ADD CONSTRAINT UQ_Correo UNIQUE (correo);
-
--- Añadir atributo extra neccesario a tabla reservas
-ALTER TABLE hotel.dbo.Reservas
-ADD fechaCreacion DATE DEFAULT CURRENT_TIMESTAMP;
