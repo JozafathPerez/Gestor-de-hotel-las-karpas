@@ -50,10 +50,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /**
-          * Calcula el descuento y devuelve el descuento de segun la temporada que se encuentre
-          * el día actual.
-          */
+        /// <summary>
+        /// Calcula el descuento y devuelve el descuento de según la temporada que se encuentre el día actual.
+        /// </summary>
+        /// <returns>Descuento según la temporada</returns>
         private int DescuentoTemporada()
         {
             DateTime fecha = fechaCreacion;
@@ -122,7 +122,10 @@ namespace Gestor_de_hotel_las_karpass
             return (descuento, nochesGratis);
         }
 
-        // Actualiza los valores que se pueden seleccionar de combo box de cliente
+        /// <summary>
+        /// Calcula el descuento y devuelve el descuento de según la temporada que se encuentre el día actual.
+        /// </summary>
+        /// <returns>Descuento según la temporada</returns>
         private void ActualizarClientesCombobox()
         {
             try
@@ -153,6 +156,9 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Carga la informacion de la reserva selecicoada en los entrys del form
+        /// </summary>
         private void CargarInfoReserva()
         {
             try
@@ -201,8 +207,9 @@ namespace Gestor_de_hotel_las_karpass
                 conexion.cerrar();
             }
         }
-
-        // Actualiza el check list con las habitaciones disponibles a reservar en el rango de fecha seleccionado
+        /// <summary>
+        /// Actualiza el check list con las habitaciones disponibles para reservar.
+        /// </summary>
         private void ActualizarHabitacionesDisponibles()
         {
             checkedListHabitaciones.Items.Clear();
@@ -249,8 +256,9 @@ namespace Gestor_de_hotel_las_karpass
             normalizarNumericCantPersonas();
         }
 
-        // SeleccionarHabitaciones
-        // Actualiza la lista de Habitaciones selccionadas
+        /// <summary>
+        /// Actualiza la informacion interna de las habitaicones selccionadas en el checklist de habitaciones.
+        /// </summary>
         private void SeleccionarHabitaciones()
         {
             // limpiar la lista
@@ -274,6 +282,9 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Actualiza los totales del precio de la reserva.
+        /// </summary>
         private void ActualizarTotales()
         {
             precioReserva = 0;
@@ -333,6 +344,9 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Normaliza el VALUE del numeric dependiendo del maximo y minimo del objeto
+        /// </summary>
         private void normalizarNumericCantPersonas()
         {
             if (cantMaxPersonas > 0)
@@ -352,6 +366,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Valida si los datos de la reserva son válidos.
+        /// </summary>
+        /// <returns>True si los datos son válidos, False si no lo son</returns>
         private bool datosReservaValidos()
         {
             // Validar formato del cliente
@@ -398,6 +416,10 @@ namespace Gestor_de_hotel_las_karpass
             return true;
         }
 
+        /// <summary>
+        /// Guarda la información de la reserva en la base de datos.
+        /// </summary>
+        /// <returns>El número de la reserva guardada</returns>
         private int ActualizarReservaBD()
         {
             int resultado = 0;
