@@ -16,6 +16,13 @@ namespace Gestor_de_hotel_las_karpass
     {
         private ConexionBD conexion;
         private FuncionesAux funcionesAux;
+
+        /*******************************************************
+        * Nombre: PersonalForm
+        * Descripcion: Inicializa la ventana y actualiza sus elementos.
+        * Entradas: 
+        * Salidad: 
+        * *******************************************************/
         public PersonalForm()
         {
             InitializeComponent();
@@ -37,12 +44,13 @@ namespace Gestor_de_hotel_las_karpass
 
         }
 
-        /// <summary>
-        /// Actualiza la vista de empleados en el DataGridView.
-        /// </summary>
-        /// <remarks>
-        /// Obtiene los datos de los empleados de la base de datos y los muestra en el DataGridView.
-        /// </remarks>
+         /*******************************************************
+        * Nombre: actualizarDataView
+        * Descripcion: Actualiza un elemento de la ventana con datos de los empleados.
+        * Entradas: 
+        * Salidad: 
+        * *******************************************************/
+        
         public void actualizarDataView()
         {
             conexion.abrir();
@@ -61,10 +69,12 @@ namespace Gestor_de_hotel_las_karpass
             conexion.cerrar();
         }
 
-        /// <summary>
-        /// Método que se ejecuta al hacer clic en el botón Guardar.
-        /// Guarda la información de un nuevo empleado en la base de datos.
-        /// </summary>
+        /*******************************************************
+        * Nombre: BtGuardar_Click
+        * Descripcion: Almacena un empleado en la BD.
+        * Entradas: 
+        * Salidad: 
+        * *******************************************************/
         private void BtGuardar_Click(object sender, EventArgs e)
         {
             // Verifica si hay datos en los campos obligatorios
@@ -127,12 +137,12 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Obtiene el idRol según el tipo de usuario seleccionado.
-        /// </summary>
-        /// <remarks>
-        /// Utiliza un switch para asignar el idRol según el rol seleccionado en la lista desplegable.
-        /// </remarks>
+         /*******************************************************
+        * Nombre: ObtenerIdRol
+        * Descripcion: Función para obtener el idRol según el tipo de usuario.
+        * Entradas: (string) nombre del rol del empleado
+        * Salidad: (int) Devuelve el id del rol
+        * *******************************************************/
         private int ObtenerIdRol(string rol)
         {
             switch (rol)
@@ -148,10 +158,12 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Genera una contraseña aleatoria de 4 números.
-        /// </summary>
-        /// <returns>La contraseña generada.</returns>
+        /*******************************************************
+        * Nombre: GenerarContrasenaAleatoria
+        * Descripcion: Función para generar una contraseña aleatoria de 4 números.
+        * Entradas: 
+        * Salidad: (string) Devuelve la contraseña generada
+        * *******************************************************/
         private string GenerarContrasenaAleatoria()
         {
             Random rnd = new Random();
@@ -163,19 +175,24 @@ namespace Gestor_de_hotel_las_karpass
             return $"{num1}{num2}{num3}{num4}";
         }
 
-        /// <summary>
-        /// Obtiene la fecha y hora actuales en formato "yyyy-MM-dd HH:mm:ss".
-        /// </summary>
-        /// <returns>La fecha y hora actuales en formato especificado.</returns>
+         /*******************************************************
+       * Nombre: ObtenerFechaActual
+       * Descripcion: Función para obtener la fecha actual en formato "yyyy-MM-dd HH:mm:ss".
+       * Entradas: 
+       * Salidad: (string) Devuelve la fecha actual
+       * *******************************************************/
         private string ObtenerFechaActual()
         {
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        /// <summary>
-        /// Método que se ejecuta al hacer clic en el botón Actualizar.
-        /// Abre un formulario para actualizar la información de un empleado seleccionado en el DataGridView.
-        /// </summary>
+        /*******************************************************
+       * Nombre: BtActualizar_Click
+       * Descripcion: Actualiza una fila(empleado) seleccionada en el DataGridView de la ventana.
+       * Entradas: objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+       * Salidad: 
+       * *******************************************************/
         private void BtActualizar_Click(object sender, EventArgs e)
         {
             // Verifica si hay una fila seleccionada en el DataGridView
@@ -200,10 +217,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Método que se ejecuta al hacer clic en el botón Eliminar.
-        /// Elimina un empleado seleccionado en el DataGridView de la base de datos.
-        /// </summary>
+         /*******************************************************
+       * Nombre: BtEliminar_Click
+       * Descripcion: Elimina una fila(empleado) seleccionada en el DataGridView de la ventana.
+       * Entradas: objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+       * Salidad: 
+       * *******************************************************/
         private void BtEliminar_Click(object sender, EventArgs e)
         {
             // Verifica si hay una fila seleccionada en el DataGridView
