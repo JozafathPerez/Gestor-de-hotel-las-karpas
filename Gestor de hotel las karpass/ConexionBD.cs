@@ -16,12 +16,24 @@ namespace Gestor_de_hotel_las_karpass
         public SqlConnection ConectarBD = new SqlConnection();
         public static SqlConnection ConectarBD2 = new SqlConnection();
 
+        /*******************************************************
+        * Nombre: ConexionBD
+        * Descripcion: Clase que crea un objeto de conexion con la base de datos.
+        * Entradas:
+        * Salidad:
+        * *******************************************************/
         public ConexionBD()
         {
             ConectarBD.ConnectionString = cadena;
             ConectarBD2.ConnectionString = cadena;
         }
 
+        /*******************************************************
+        * Nombre: abrir
+        * Descripcion: Inicia una conexion con la base de datos.
+        * Entradas:
+        * Salidad:
+        * *******************************************************/
         public void  abrir()
         {
             try
@@ -34,6 +46,13 @@ namespace Gestor_de_hotel_las_karpass
                 Console.WriteLine("ERROR: No se pudo abrir la BD" + ex.Message);
             }
         }
+
+        /*******************************************************
+        * Nombre: obtenerConexion
+        * Descripcion: Devuelve un objeto de conexion con la BD.
+        * Entradas:
+        * Salidad:(SqlConnection) objeto de conexion con la bd.
+        * *******************************************************/
         public static SqlConnection obtenerConexion()
         {
             string cadena = $"Data Source={Environment.MachineName};Initial Catalog=hotel; Integrated Security=True";
@@ -51,6 +70,12 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /*******************************************************
+        * Nombre: cerrar
+        * Descripcion: Cierra una conexion con la base de datos.
+        * Entradas:
+        * Salidad:
+        * *******************************************************/
         public void cerrar() 
         {
             ConectarBD.Close();

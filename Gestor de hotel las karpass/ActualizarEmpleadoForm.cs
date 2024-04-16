@@ -16,6 +16,13 @@ namespace Gestor_de_hotel_las_karpass
         private ConexionBD conexion;
         private int idEmpleadoSelecionado;
 
+        /*******************************************************
+         * Nombre: ActualizarEmpleadoForm
+         * Descripcion: Funcion la cual inicializa la ventana y la actualiza. Ademas de iniciar una conexion
+         * con la BD.
+         * Entradas:(int) Con la id del empleado a cargar sus datos.
+         * Salidad:
+         * *******************************************************/
         public ActualizarEmpleadoForm(int idEmpleadoSelecionado)
         {
             InitializeComponent();
@@ -37,6 +44,12 @@ namespace Gestor_de_hotel_las_karpass
             CargarDatosEmpleado(idEmpleadoSelecionado);
         }
 
+         /*******************************************************
+         * Nombre: actualizarDataView
+         * Descripcion: Saca la informacion del empleado de la BD y la almacena en una tabla para presentarla.
+         * Entradas:
+         * Salidad:
+         * *******************************************************/
         public void actualizarDataView()
         {
             conexion.abrir();
@@ -59,6 +72,12 @@ namespace Gestor_de_hotel_las_karpass
         }
 
 
+        /*******************************************************
+        * Nombre: CargarDatosEmpleado
+        * Descripcion: Saca los datos de un empleado de la BD y la almacena en la ventana.
+        * Entradas:(int) Id del empleado a buscar.
+        * Salidad:
+        * *******************************************************/
         private void CargarDatosEmpleado(int idEmpleado)
         {
             conexion.abrir();
@@ -85,6 +104,13 @@ namespace Gestor_de_hotel_las_karpass
             conexion.cerrar();
         }
 
+        /*******************************************************
+         * Nombre: BtActualizar_Click
+         * Descripcion: Actualiza la informacion de un empleado en la BD.
+         * Entradas:un objeto (object) en el cual se va realizar el evento 
+         * y el evento a realizar en el (EventArgs).
+         * Salidad:
+         * *******************************************************/
         private void BtActualizar_Click(object sender, EventArgs e)
         {
             // Verifica si hay datos en los campos obligatorios
@@ -141,11 +167,23 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /*******************************************************
+         * Nombre: ObtenerFechaActual
+         * Descripcion: Obtiene la fecha alctual del sistema.
+         * Entradas:
+         * Salidad: (string) con la fecha actual del sistema.
+         * *******************************************************/
         private string ObtenerFechaActual()
         {
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
+        /*******************************************************
+         * Nombre: ObtenerRol
+         * Descripcion: Devuelve el rol (rango) que tiene un empleado.
+         * Entradas: (int) con el id de su rol
+         * Salidad: (string) con su rol.
+         * *******************************************************/
         private string ObtenerRol(int idRol)
         {
             switch (idRol)
@@ -161,7 +199,12 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        // Función para obtener el idRol según el tipo de usuario
+        /*******************************************************
+         * Nombre: ObtenerIdRol
+         * Descripcion: Devuelve el id del rol que tiene un empleado.
+         * Entradas: (string) con su rol.
+         * Salidad: (int) con el numero asignado al rol.
+         * *******************************************************/
         private int ObtenerIdRol(string rol)
         {
             switch (rol)
