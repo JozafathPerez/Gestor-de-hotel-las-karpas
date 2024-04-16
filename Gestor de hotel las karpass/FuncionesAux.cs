@@ -12,11 +12,23 @@ namespace Gestor_de_hotel_las_karpass
     {
         private ConexionBD conexion;
 
+        /*******************************************************
+        * Nombre: FuncionesAux
+        * Descripcion: almacena un objeto de tipo ConexionBD.
+        * Entradas: (ConexionBD) objeto a almacenar.
+        * Salidad: 
+        * *******************************************************/
         public FuncionesAux(ConexionBD conexion)
         {
             this.conexion = conexion;
         }
 
+        /*******************************************************
+        * Nombre: ObtenerIdRol
+        * Descripcion: Verifica si el idEmpleado es igual a 1 para administrador.
+        * Entradas: (int) id empleado.
+        * Salidad: (int) resultado del comando Sql.
+        * *******************************************************/
         public int ObtenerIdRol(int idEmpleado)
         {
             // Verifica si el idEmpleado es igual a 1 para administrador
@@ -38,19 +50,17 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        // Remueve cualquier caracter de un string que no sea un numero o un punto
+        /*******************************************************
+        * Nombre: RemoverCaracteresNoNumericos
+        * Descripcion: Remueve cualquier caracter de un string que no sea un numero o un punto.
+        * Entradas: (string) caracter a modificar.
+        * Salidad: (string) caracter modificado.
+        * *******************************************************/
         public string RemoverCaracteresNoNumericos(string input)
         {
             Regex regex = new Regex("[^0-9.]");
             string resultado = regex.Replace(input, "");
             return resultado;
         }
-
-
-
-
-
-
-
     }
 }
