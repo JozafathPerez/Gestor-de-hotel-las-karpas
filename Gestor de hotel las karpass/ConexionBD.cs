@@ -36,7 +36,7 @@ namespace Gestor_de_hotel_las_karpass
         }
         public static SqlConnection obtenerConexion()
         {
-            string cadena = "Data Source=ZYZZJOZA;Initial Catalog=hotel; Integrated Security=True";
+            string cadena = $"Data Source={Environment.MachineName};Initial Catalog=hotel; Integrated Security=True";
             SqlConnection conectarBD = new SqlConnection();
             conectarBD.ConnectionString = cadena;
             try
