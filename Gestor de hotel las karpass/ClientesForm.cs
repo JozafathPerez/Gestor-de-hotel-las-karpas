@@ -17,6 +17,13 @@ namespace Gestor_de_hotel_las_karpass
         private FuncionesAux funcionesAux;
         private int idEmpleado;
 
+        /*******************************************************
+         * Nombre: ClientesForm
+         * Descripcion: Funcion la cual inicializa la ventana y la actualiza. Ademas de iniciar una conexion
+         * con la BD.
+         * Entradas:(int) Con la id de un empleado.
+         * Salidad:
+         * *******************************************************/
         public ClientesForm(int idEmpleado)
         {
             InitializeComponent();
@@ -32,12 +39,12 @@ namespace Gestor_de_hotel_las_karpass
 
         }
 
-        /// <summary>
-        /// Actualiza la vista de empleados en el DataGridView.
-        /// </summary>
-        /// <remarks>
-        /// Obtiene los datos de los empleados de la base de datos y los muestra en el DataGridView.
-        /// </remarks>
+        /*******************************************************
+         * Nombre: actualizarDataView
+         * Descripcion: Saca la informacion del cliente de la BD y la almacena en una tabla para presentarla.
+         * Entradas:
+         * Salidad:
+         * *******************************************************/
         public void actualizarDataView()
         {
             conexion.abrir();
@@ -50,10 +57,13 @@ namespace Gestor_de_hotel_las_karpass
             conexion.cerrar();
         }
 
-        /// <summary>
-        /// Método que se ejecuta al hacer clic en el botón Guardar.
-        /// Guarda la información de un nuevo empleado en la base de datos.
-        /// </summary>
+        /*******************************************************
+         * Nombre: BtGuardar_Click
+         * Descripcion: Guarda la info de un cliente en la BD.
+         * Entradas:un objeto (object) en el cual se va realizar el evento 
+         * y el evento a realizar en el (EventArgs).
+         * Salidad:
+         * *******************************************************/
         private void BtGuardar_Click(object sender, EventArgs e)
         {
             // Verifica si hay datos en los campos obligatorios
@@ -105,10 +115,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Método que se ejecuta al hacer clic en el botón Actualizar.
-        /// Abre un formulario para actualizar la información de un cliente seleccionado en el DataGridView.
-        /// </summary>
+        /*******************************************************
+         * Nombre: BtActualizar_Click
+         * Descripcion: Actualiza la informacion de una columna seleccionada en la tabla.
+         * Entradas:un objeto (object) en el cual se va realizar el evento 
+         * y el evento a realizar en el (EventArgs).
+         * Salidad:
+         * *******************************************************/
         private void BtActualizar_Click(object sender, EventArgs e)
         {
             // Verifica si hay una fila seleccionada en el DataGridView
@@ -133,10 +146,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Método que se ejecuta al hacer clic en el botón Eliminar.
-        /// Elimina un cliente seleccionado en el DataGridView de la base de datos.
-        /// </summary>
+        /*******************************************************
+         * Nombre: BtEliminar_Click
+         * Descripcion: Elimina un cliente de la BD, el cual fue seleccionado en el DataGridView.
+         * Entradas:un objeto (object) en el cual se va realizar el evento 
+         * y el evento a realizar en el (EventArgs).
+         * Salidad:
+         * *******************************************************/
         private void BtEliminar_Click(object sender, EventArgs e)
         {
             // Verifica si hay una fila seleccionada en el DataGridView
