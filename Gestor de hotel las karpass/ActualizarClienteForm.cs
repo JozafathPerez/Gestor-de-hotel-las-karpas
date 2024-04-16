@@ -16,6 +16,13 @@ namespace Gestor_de_hotel_las_karpass
         private ConexionBD conexion;
         private decimal idClienteSeleccionado;
 
+        /*******************************************************
+         * Nombre: ActualizarClienteForm
+         * Descripcion: Funcion la cual inicializa la ventana y la actualiza. Ademas de iniciar una conexion
+         * con la BD.
+         * Entradas:(Decimal) Con la id del cliente a mostrar sus datos.
+         * Salidad:
+         * *******************************************************/
         public ActualizarClienteForm(decimal idClienteSeleccionado)
         {
             InitializeComponent();
@@ -26,6 +33,12 @@ namespace Gestor_de_hotel_las_karpass
             CargarDatosCliente(idClienteSeleccionado);
         }
 
+        /*******************************************************
+         * Nombre: actualizarDataView
+         * Descripcion: Saca la informacion del cliente de la BD y la almacena en una tabla para presentarla.
+         * Entradas:
+         * Salidad:
+         * *******************************************************/
         public void actualizarDataView()
         {
             conexion.abrir();
@@ -41,6 +54,13 @@ namespace Gestor_de_hotel_las_karpass
         }
 
 
+        /*******************************************************
+         * Nombre: BtActualizar_Click
+         * Descripcion: Actualiza la informacion de un cliente en la BD.
+         * Entradas:un objeto (object) en el cual se va realizar el evento 
+         * y el evento a realizar en el (EventArgs).
+         * Salidad:
+         * *******************************************************/
         private void BtActualizar_Click(object sender, EventArgs e)
         {
             // Verificar que los campos obligatorios estén completos
@@ -95,6 +115,12 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /*******************************************************
+        * Nombre: CargarDatosCliente
+        * Descripcion: Saca los datos de un cliente de la BD y la almacena en la ventana.
+        * Entradas:(decimal) Id del cliente a buscar.
+        * Salidad:
+        * *******************************************************/
         private void CargarDatosCliente(decimal idCliente)
         {
             conexion.abrir();
