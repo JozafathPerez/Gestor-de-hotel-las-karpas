@@ -37,6 +37,12 @@ namespace Gestor_de_hotel_las_karpass
 
         }
 
+        /// <summary>
+        /// Actualiza la vista de empleados en el DataGridView.
+        /// </summary>
+        /// <remarks>
+        /// Obtiene los datos de los empleados de la base de datos y los muestra en el DataGridView.
+        /// </remarks>
         public void actualizarDataView()
         {
             conexion.abrir();
@@ -55,6 +61,10 @@ namespace Gestor_de_hotel_las_karpass
             conexion.cerrar();
         }
 
+        /// <summary>
+        /// Método que se ejecuta al hacer clic en el botón Guardar.
+        /// Guarda la información de un nuevo empleado en la base de datos.
+        /// </summary>
         private void BtGuardar_Click(object sender, EventArgs e)
         {
             // Verifica si hay datos en los campos obligatorios
@@ -117,7 +127,12 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        // Función para obtener el idRol según el tipo de usuario
+        /// <summary>
+        /// Obtiene el idRol según el tipo de usuario seleccionado.
+        /// </summary>
+        /// <remarks>
+        /// Utiliza un switch para asignar el idRol según el rol seleccionado en la lista desplegable.
+        /// </remarks>
         private int ObtenerIdRol(string rol)
         {
             switch (rol)
@@ -133,7 +148,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        // Función para generar una contraseña aleatoria de 4 números
+        /// <summary>
+        /// Genera una contraseña aleatoria de 4 números.
+        /// </summary>
+        /// <returns>La contraseña generada.</returns>
         private string GenerarContrasenaAleatoria()
         {
             Random rnd = new Random();
@@ -145,14 +163,19 @@ namespace Gestor_de_hotel_las_karpass
             return $"{num1}{num2}{num3}{num4}";
         }
 
-        // Función para obtener la fecha actual en formato "yyyy-MM-dd HH:mm:ss"
+        /// <summary>
+        /// Obtiene la fecha y hora actuales en formato "yyyy-MM-dd HH:mm:ss".
+        /// </summary>
+        /// <returns>La fecha y hora actuales en formato especificado.</returns>
         private string ObtenerFechaActual()
         {
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-
-
+        /// <summary>
+        /// Método que se ejecuta al hacer clic en el botón Actualizar.
+        /// Abre un formulario para actualizar la información de un empleado seleccionado en el DataGridView.
+        /// </summary>
         private void BtActualizar_Click(object sender, EventArgs e)
         {
             // Verifica si hay una fila seleccionada en el DataGridView
@@ -177,7 +200,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-
+        /// <summary>
+        /// Método que se ejecuta al hacer clic en el botón Eliminar.
+        /// Elimina un empleado seleccionado en el DataGridView de la base de datos.
+        /// </summary>
         private void BtEliminar_Click(object sender, EventArgs e)
         {
             // Verifica si hay una fila seleccionada en el DataGridView

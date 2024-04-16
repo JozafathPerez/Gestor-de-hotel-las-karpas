@@ -32,6 +32,12 @@ namespace Gestor_de_hotel_las_karpass
 
         }
 
+        /// <summary>
+        /// Actualiza la vista de empleados en el DataGridView.
+        /// </summary>
+        /// <remarks>
+        /// Obtiene los datos de los empleados de la base de datos y los muestra en el DataGridView.
+        /// </remarks>
         public void actualizarDataView()
         {
             conexion.abrir();
@@ -44,6 +50,10 @@ namespace Gestor_de_hotel_las_karpass
             conexion.cerrar();
         }
 
+        /// <summary>
+        /// Método que se ejecuta al hacer clic en el botón Guardar.
+        /// Guarda la información de un nuevo empleado en la base de datos.
+        /// </summary>
         private void BtGuardar_Click(object sender, EventArgs e)
         {
             // Verifica si hay datos en los campos obligatorios
@@ -95,7 +105,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-
+        /// <summary>
+        /// Método que se ejecuta al hacer clic en el botón Actualizar.
+        /// Abre un formulario para actualizar la información de un cliente seleccionado en el DataGridView.
+        /// </summary>
         private void BtActualizar_Click(object sender, EventArgs e)
         {
             // Verifica si hay una fila seleccionada en el DataGridView
@@ -120,6 +133,10 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /// <summary>
+        /// Método que se ejecuta al hacer clic en el botón Eliminar.
+        /// Elimina un cliente seleccionado en el DataGridView de la base de datos.
+        /// </summary>
         private void BtEliminar_Click(object sender, EventArgs e)
         {
             // Verifica si hay una fila seleccionada en el DataGridView
