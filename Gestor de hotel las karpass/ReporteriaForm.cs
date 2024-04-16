@@ -34,14 +34,14 @@ namespace Gestor_de_hotel_las_karpass
                 {
                     List<string> reservaActual = new List<string>();
                     reservaActual.Add(lector.GetInt32(0).ToString());
-                    reservaActual.Add(lector.GetInt32(1).ToString());
+                    reservaActual.Add(lector[1].ToString());
                     reservaActual.Add(lector.GetDateTime(2).ToString());
                     reservaActual.Add(lector.GetDateTime(3).ToString());
                     reservaActual.Add(lector.GetInt32(4).ToString());
-                    reservaActual.Add(lector.GetDateTime(5).ToString());
+                    reservaActual.Add(lector[5].ToString());
                     reservaActual.Add(lector.GetDecimal(6).ToString());
                     reservaActual.Add(lector.GetInt32(7).ToString());
-                    reservaActual.Add(lector.GetInt32(8).ToString());
+                    reservaActual.Add(lector[8].ToString());
                     listaReservas.Add(reservaActual);
                 }
                 conexion.Close();
@@ -56,22 +56,20 @@ namespace Gestor_de_hotel_las_karpass
             using (SqlConnection conexion = ConexionBD.obtenerConexion())
             {
                 string query = "SELECT identificacionCliente,nombre,primerApellido,segundoApellido," +
-                    "paisProcedencia,direccion,fechaNacimiento,telefono,correo FROM Clientes";
+                    "paisProcedencia,telefono,correo FROM Clientes";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
                 SqlDataReader lector = comando.ExecuteReader();
                 while (lector.Read())
                 {
                     List<string> clienteActual = new List<string>();
-                    clienteActual.Add(lector.GetInt32(0).ToString());
+                    clienteActual.Add(lector[0].ToString());
                     clienteActual.Add(lector.GetString(1));
                     clienteActual.Add(lector.GetString(2));
                     clienteActual.Add(lector.GetString(3));
                     clienteActual.Add(lector.GetString(4));
-                    clienteActual.Add(lector.GetString(5));
-                    clienteActual.Add(lector.GetDateTime(6).ToString());
-                    clienteActual.Add(lector.GetDecimal(7).ToString());
-                    clienteActual.Add(lector.GetString(8));
+                    clienteActual.Add(lector.GetDecimal(5).ToString());
+                    clienteActual.Add(lector.GetString(6));
                     listaClientes.Add(clienteActual);
                 }
                 conexion.Close();
@@ -142,7 +140,7 @@ namespace Gestor_de_hotel_las_karpass
                     if (clienteActual[0] == reservaActual[1])
                     {
                         string estado;
-                        if (int.Parse(reservaActual[8]) == 0) { estado = "Vigente"; } else { estado = "Cancelado"; }
+                        if (reservaActual[8] == "0") { estado = "Vigente"; } else { estado = "Cancelado"; }
                         grid.Rows.Add(reservaActual[0], reservaActual[1], clienteActual[1], clienteActual[2], clienteActual[3],
                 clienteActual[4], reservaActual[4], reservaActual[2], reservaActual[3], reservaActual[6], reservaActual[7],
                 estado);
@@ -176,7 +174,7 @@ namespace Gestor_de_hotel_las_karpass
                     if (clienteActual[0] == reservaActual[1])
 
                     {
-                        if (int.Parse(reservaActual[8]) != 0) {
+                        if (reservaActual[8] != "0") {
                             grid.Rows.Add(reservaActual[0], reservaActual[7], reservaActual[1], clienteActual[1], clienteActual[2],
                             clienteActual[3], "Cancelado");
                         }
