@@ -14,11 +14,25 @@ namespace Gestor_de_hotel_las_karpass
 {
     public partial class ReporteriaForm : Form
     {
+        /*******************************************************
+         * Nombre: ReporteriaForm.
+         * Descripcion: Funcion que inicializa la ventana.
+         * Entradas:
+         * Salidad:
+         * *******************************************************/
         public ReporteriaForm()
         {
             InitializeComponent();
         }
 
+        /*******************************************************
+         * Nombre: obtenerReservas.
+         * Descripcion: Funcion la cual se conecta a la base de datos, saca la informacion de todas las reservas
+         * almacenadas y la guarda en un arreglo.
+         * Entradas:
+         * Salidad: Devuelve una lista de listas de tipo string con la informacion de todas las reservas
+         * en la base de datos.
+         * *******************************************************/
         public List<List<string>> obtenerReservas()
         {
             List<List<string>> listaReservas = new List<List<string>>();
@@ -49,6 +63,14 @@ namespace Gestor_de_hotel_las_karpass
             return listaReservas;
         }
 
+         /*******************************************************
+         * Nombre: obtenerCliente.
+         * Descripcion: Funcion la cual se conecta a la base de datos, saca la informacion de todas los clientes
+         * almacenados y la guarda en un arreglo.
+         * Entradas:
+         * Salidad: Devuelve una lista de listas de tipo string con la informacion de todas los clientes
+         * en la base de datos.
+         * *******************************************************/
         public List<List<string>> obtenerCliente()
         {
             List<List<string>> listaClientes = new List<List<string>>();
@@ -77,6 +99,14 @@ namespace Gestor_de_hotel_las_karpass
             return listaClientes;
         }
 
+        /*******************************************************
+         * Nombre: obtenerEmpleado.
+         * Descripcion: Funcion la cual se conecta a la base de datos, saca la informacion de todas los empleados
+         * almacenados y la guarda en un arreglo.
+         * Entradas:
+         * Salidad: Devuelve una lista de listas de tipo string con la informacion de todas los empleados
+         * en la base de datos.
+         * *******************************************************/
         public List<List<string>> obtenerEmpleado()
         {
             List<List<string>> listaEmpleados = new List<List<string>>();
@@ -105,12 +135,27 @@ namespace Gestor_de_hotel_las_karpass
             return listaEmpleados;
         }
 
+        /*******************************************************
+         * Nombre: ReporteriaForm_Load
+         * Descripcion: Funcion que oculta el grafico y la tabla al momento que la ventana es inicializada.
+         * Entradas: un objeto (object) en el cual se va realizar el evento 
+         * y el evento a realizar en el (EventArgs).
+         * Salidad:
+         * *******************************************************/
         private void ReporteriaForm_Load(object sender, EventArgs e)
         {
             grid.Visible = false;
             grafico.Visible = false;
         }
 
+        /*******************************************************
+         * Nombre: BtReservas_Click
+         * Descripcion: Funcion que almacena la informacion de una o varias reservas para mostrarla 
+         * de forma grafica en una tabla.
+         * Entradas: un objeto (object) en el cual se va realizar el evento 
+         * y el evento a realizar en el (EventArgs).
+         * Salidad:
+         * *******************************************************/
         private void BtReservas_Click(object sender, EventArgs e)
         {
             grid.Rows.Clear();
@@ -150,6 +195,14 @@ namespace Gestor_de_hotel_las_karpass
             grid.Visible = true;
         }
 
+        /*******************************************************
+        * Nombre: btCancelaciones_Click
+        * Descripcion: Funcion que almacena la informacion de una o varias reservas que hayan sido canceladas
+        * para mostrarla de forma grafica en una tabla.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad:
+        * *******************************************************/
         private void btCancelaciones_Click(object sender, EventArgs e)
         {
             grid.Rows.Clear();
@@ -184,6 +237,14 @@ namespace Gestor_de_hotel_las_karpass
             grid.Visible = true;
         }
 
+        /*******************************************************
+        * Nombre: btClientesRe_Click
+        * Descripcion: Funcion la cual busca en la BD las nacionalidades de todos los clientes y 
+        * las compara por medio de un grafico.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad:
+        * *******************************************************/
         private void btClientesRe_Click(object sender, EventArgs e)
         {
             grid.Visible = false;
@@ -218,6 +279,12 @@ namespace Gestor_de_hotel_las_karpass
             grafico.Visible = true;
         }
 
+        /*******************************************************
+        * Nombre: obtenerNombreRe
+        * Descripcion: Funcion la cual recibe el id de un empleado y devuelve su nombre.
+        * Entradas: (string) id del empleado a buscar.
+        * Salidad:
+        * *******************************************************/
         public string obtenerNombreRe(string id)
         {
             List<List<string>> empleados = obtenerEmpleado();
@@ -231,6 +298,13 @@ namespace Gestor_de_hotel_las_karpass
             }
             return null;
         }
+
+        /*******************************************************
+        * Nombre: obtenerNombreCl
+        * Descripcion: Funcion la cual recibe el id de un cliente y devuelve su nombre.
+        * Entradas: (string) id del cliente a buscar.
+        * Salidad:
+        * *******************************************************/
         public string obtenerNombreCl(string id)
         {
             List<List<string>> clientes = obtenerCliente();
@@ -244,6 +318,15 @@ namespace Gestor_de_hotel_las_karpass
             }
             return null;
         }
+
+        /*******************************************************
+        * Nombre: btRecepcionista_Click
+        * Descripcion: Funcion la cual busca en la BD las reservas de todos los empleados y 
+        * las compara por medio de un grafico para ver quien ha realizado mas de estas.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad:
+        * *******************************************************/
         private void btRecepcionista_Click(object sender, EventArgs e)
         {
             grid.Visible = false;
@@ -280,6 +363,14 @@ namespace Gestor_de_hotel_las_karpass
             grafico.Visible = true;
         }
 
+        /*******************************************************
+        * Nombre: btFechasRe_Click
+        * Descripcion: Funcion la cual busca en la BD las reservas y 
+        * las compara por medio de un grafico para ver cuantas de estas se han realizado en rangos de 3 meses.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad:
+        * *******************************************************/
         private void btFechasRe_Click(object sender, EventArgs e)
         {
             grid.Visible = false;
@@ -322,6 +413,14 @@ namespace Gestor_de_hotel_las_karpass
             grafico.Visible = true;
         }
 
+        /*******************************************************
+        * Nombre: btIngresos_Click
+        * Descripcion: Funcion la cual busca en la BD las reservas y 
+        * las compara por medio de un grafico para ver cuantos ingresos se han generado en rangos de 3 meses.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad:
+        * *******************************************************/
         private void btIngresos_Click(object sender, EventArgs e)
         {
             grid.Visible = false;
@@ -367,6 +466,15 @@ namespace Gestor_de_hotel_las_karpass
 
         }
 
+        /*******************************************************
+        * Nombre: btClienteFre_Click
+        * Descripcion: Funcion la cual busca en la BD las reservas y 
+        * las compara por medio de un grafico para ver cual ha sido el cliente que
+        * mas ha frecuentado el hotel.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad:
+        * *******************************************************/
         private void btClienteFre_Click(object sender, EventArgs e)
         {
             grid.Visible = false;
