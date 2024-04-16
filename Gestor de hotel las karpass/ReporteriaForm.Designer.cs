@@ -178,6 +178,7 @@
             this.Controls.Add(this.btCancelaciones);
             this.Controls.Add(this.BtReservas);
             this.Controls.Add(this.ImagenMenu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ReporteriaForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ReporteriaForm";
