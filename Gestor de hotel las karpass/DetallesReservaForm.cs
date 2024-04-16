@@ -29,6 +29,13 @@ namespace Gestor_de_hotel_las_karpass
         private List<(int numero, double precio, string tipo, int maxPersonas)> habitacionesSeleccionadas;
         DateTime fechaCreacion;
 
+
+        /*******************************************************
+         * Nombre: DetallesReservaForm
+         * Descripcion: Inicializa la ventana y crea una lista de habitaciones seleccionadas.
+         * Entradas: (int) numero Reserva, (int) permisos
+         * Salidad: 
+         * *******************************************************/
         public DetallesReservaForm(int numeroReserva, int permisos)
         {
             conexion = new ConexionBD();
@@ -50,10 +57,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Calcula el descuento y devuelve el descuento de según la temporada que se encuentre el día actual.
-        /// </summary>
-        /// <returns>Descuento según la temporada</returns>
+        /*******************************************************
+         * Nombre: DescuentoTemporada
+         * Descripcion: Calcula el descuento y devuelve el descuento de segun la temporada que se encuentre
+         * el día actual.
+         * Entradas:
+         * Salidad: (int) con el descuento
+         * *******************************************************/
         private int DescuentoTemporada()
         {
             DateTime fecha = fechaCreacion;
@@ -78,11 +88,12 @@ namespace Gestor_de_hotel_las_karpass
             return descuento;
         }
 
-        /// <summary>
-        /// Calcula el descuento basado en las reservas que realizó un cliente en el año.
-        /// </summary>
-        /// <param name="idCliente">identificacion del cliente para buscarlo en la BD</param>
-        /// <returns>tupla con forma (descuento, noches_gratis). El descuento es un multiplicador de 0-1</returns>
+        /*******************************************************
+         * Nombre: DescuentoClienteFrecuente
+         * Descripcion: Calcula el descuento basado en las reservas que realizó un cliente en el año.
+         * Entradas: (Decimal) id del cliente para buscarlo en la BD
+         * Salidad: (int,int) tupla con forma (descuento, noches_gratis). El descuento es un multiplicador de 0-1
+         * *******************************************************/
         private (int, int) DescuentoClienteFrecuente(Decimal idCliente)
         {
             int descuento = 0;
@@ -122,10 +133,12 @@ namespace Gestor_de_hotel_las_karpass
             return (descuento, nochesGratis);
         }
 
-        /// <summary>
-        /// Calcula el descuento y devuelve el descuento de según la temporada que se encuentre el día actual.
-        /// </summary>
-        /// <returns>Descuento según la temporada</returns>
+         /*******************************************************
+         * Nombre: ActualizarClientesCombobox
+         * Descripcion: Actualiza los valores que se pueden seleccionar de combo box de cliente.
+         * Entradas: 
+         * Salidad: 
+         * *******************************************************/
         private void ActualizarClientesCombobox()
         {
             try
@@ -156,9 +169,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Carga la informacion de la reserva selecicoada en los entrys del form
-        /// </summary>
+        /*******************************************************
+         * Nombre: CargarInfoReserva
+         * Descripcion: Funcion la cual trae informacion de diferentes tablas de la base de datos para
+         * cargarla en la ventana.
+         * Entradas: 
+         * Salidad: 
+         * *******************************************************/
         private void CargarInfoReserva()
         {
             try
@@ -207,9 +224,13 @@ namespace Gestor_de_hotel_las_karpass
                 conexion.cerrar();
             }
         }
-        /// <summary>
-        /// Actualiza el check list con las habitaciones disponibles para reservar.
-        /// </summary>
+        
+        /*******************************************************
+         * Nombre: ActualizarHabitacionesDisponibles
+         * Descripcion: Actualiza el check list con las habitaciones disponibles a reservar en el rango de fecha seleccionado.
+         * Entradas: 
+         * Salidad: 
+         * *******************************************************/
         private void ActualizarHabitacionesDisponibles()
         {
             checkedListHabitaciones.Items.Clear();
@@ -256,9 +277,12 @@ namespace Gestor_de_hotel_las_karpass
             normalizarNumericCantPersonas();
         }
 
-        /// <summary>
-        /// Actualiza la informacion interna de las habitaicones selccionadas en el checklist de habitaciones.
-        /// </summary>
+        /*******************************************************
+         * Nombre: SeleccionarHabitaciones
+         * Descripcion: Actualiza la informacion interna de las habitaicones selccionadas en el checklist de habitaciones.
+         * Entradas: 
+         * Salidad: 
+         * *******************************************************/
         private void SeleccionarHabitaciones()
         {
             // limpiar la lista
@@ -282,9 +306,12 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Actualiza los totales del precio de la reserva.
-        /// </summary>
+        /*******************************************************
+         * Nombre: ActualizarTotales
+         * Descripcion: Actualiza los totales del precio de la reserva.
+         * Entradas: 
+         * Salidad: 
+         * *******************************************************/
         private void ActualizarTotales()
         {
             precioReserva = 0;
@@ -327,6 +354,13 @@ namespace Gestor_de_hotel_las_karpass
             labelPrecioTotal.Text = "Total: $" + precioReserva.ToString();
         }
 
+        /*******************************************************
+         * Nombre: checkedListHabitaciones_ItemCheck
+         * Descripcion: Actualiza la checkedList de las habitaciones.
+         * Entradas: un objeto (object) en el cual se va realizar el evento 
+         * y el evento a realizar en el (EventArgs).
+         * Salidad: 
+         * *******************************************************/
         private void checkedListHabitaciones_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             try
@@ -344,6 +378,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /*******************************************************
+         * Nombre: normalizarNumericCantPersonas
+         * Descripcion: Valida que haya un maximo y minimo de personas por habitacion (Normaliza el VALUE del numeric dependiendo del maximo 
+         * y minimo del objeto).
+         * Entradas: 
+         * Salidad: 
+         * *******************************************************/
         /// <summary>
         /// Normaliza el VALUE del numeric dependiendo del maximo y minimo del objeto
         /// </summary>
@@ -366,10 +407,12 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        /// <summary>
-        /// Valida si los datos de la reserva son válidos.
-        /// </summary>
-        /// <returns>True si los datos son válidos, False si no lo son</returns>
+        /*******************************************************
+         * Nombre: datosReservaValidos
+         * Descripcion: Valida que todos los datos ingresados sean aptos para almacenar en la BD.
+         * Entradas: 
+         * Salidad: (bool) true sin son aptos, false si no
+         * *******************************************************/
         private bool datosReservaValidos()
         {
             // Validar formato del cliente
@@ -416,10 +459,12 @@ namespace Gestor_de_hotel_las_karpass
             return true;
         }
 
-        /// <summary>
-        /// Guarda la información de la reserva en la base de datos.
-        /// </summary>
-        /// <returns>El número de la reserva guardada</returns>
+         /*******************************************************
+         * Nombre: ActualizarReservaBD
+         * Descripcion: Actualiza una reserva en la BD.
+         * Entradas: 
+         * Salidad: (int) con el resultado del comando Sql
+         * *******************************************************/
         private int ActualizarReservaBD()
         {
             int resultado = 0;
@@ -459,7 +504,13 @@ namespace Gestor_de_hotel_las_karpass
             return resultado;
         }
 
-        // borra todas las reservas de habitacion que se hayan desmarcado en la ventana de modificaciond e reservas
+        /*******************************************************
+         * Nombre: BorrarHabitacionDeseleccionadasBD
+         * Descripcion: Borra todas las reservas de habitacion que se hayan desmarcado en la ventana 
+         * de modificaciones e reservas.
+         * Entradas: (int) con el numero de la reserva
+         * Salidad: 
+         * *******************************************************/
         private void BorrarHabitacionDeseleccionadasBD(int numReserva) // TODO: ESTA BORRANDO LAS HABITACIONES MARCADAS (AL REVEZ)
         {
             try
@@ -501,7 +552,14 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        // Valida y actualiza en la BD las modificaciones de la reserva
+       
+        /*******************************************************
+        * Nombre: BtGuardar_Click
+        * Descripcion: Guarda una reserva en la BD.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void BtGuardar_Click(object sender, EventArgs e)
         {
             if (!(datosReservaValidos())) return;
@@ -512,11 +570,26 @@ namespace Gestor_de_hotel_las_karpass
             this.Close();
         }
 
+         /*******************************************************
+        * Nombre: numericCantPersonas_ValueChanged
+        * Descripcion: Le asigna un valor a la variable cantPersonas.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void numericCantPersonas_ValueChanged(object sender, EventArgs e)
         {
             cantPersonas = (int)numericCantPersonas.Value;
         }
 
+         /*******************************************************
+        * Nombre: datePickerFin_ValueChanged
+        * Descripcion: Le asigna un valor a la variable finReserva y llama otras funciones de 
+        * actualizacion de datos.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void datePickerFin_ValueChanged(object sender, EventArgs e)
         {
             finReserva = datePickerFin.Value;
@@ -524,6 +597,14 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarTotales();
         }
 
+        /*******************************************************
+        * Nombre: datePickerInicio_ValueChanged
+        * Descripcion: Le asigna un valor a la variable inicioReserva y llama otras funciones de 
+        * actualizacion de datos.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void datePickerInicio_ValueChanged(object sender, EventArgs e)
         {
             inicioReserva = datePickerInicio.Value;
@@ -531,6 +612,13 @@ namespace Gestor_de_hotel_las_karpass
             ActualizarTotales();
         }
 
+         /*******************************************************
+        * Nombre: comboBoxCliente_SelectedIndexChanged
+        * Descripcion: Llama a una funcion externa para actualizar informacion.
+        * Entradas: un objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void comboBoxCliente_SelectedIndexChanged(object sender, EventArgs e)
         {
             string clienteString = comboBoxCliente.Text.Split(':')[0];
