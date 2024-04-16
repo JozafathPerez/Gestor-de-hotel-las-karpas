@@ -8,9 +8,12 @@ namespace Gestor_de_hotel_las_karpass
 {
     internal static class Program
     {
-        /// <summary>
-        /// Punto de entrada principal para la aplicación.
-        /// </summary>
+        /*******************************************************
+        * Nombre: Main
+        * Descripcion: Punto de entrada principal para la aplicación.
+        * Entradas: 
+        * Salidad: 
+        * *******************************************************/
         [STAThread]
         static void Main()
         {
