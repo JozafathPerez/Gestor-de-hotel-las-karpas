@@ -15,6 +15,12 @@ namespace Gestor_de_hotel_las_karpass
     {
         private ConexionBD conexion;
 
+        /*******************************************************
+        * Nombre: PanelInicioSesion
+        * Descripcion: almacena un objeto de tipo ConexionBD y inicializa la ventana.
+        * Entradas: 
+        * Salidad: 
+        * *******************************************************/
         public PanelInicioSesion()
         {
             InitializeComponent();
@@ -23,6 +29,13 @@ namespace Gestor_de_hotel_las_karpass
             conexion = new ConexionBD();
         }
 
+        /*******************************************************
+        * Nombre: PanelInicioSesion_Load
+        * Descripcion: Actualiza el texto de dos elementos de la ventana.
+        * Entradas: objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void PanelInicioSesion_Load(object sender, EventArgs e)
         {
             TxCorreo.Text = "Correo";
@@ -30,6 +43,13 @@ namespace Gestor_de_hotel_las_karpass
             TxContrasena.PasswordChar = '\0';
         }
 
+        /*******************************************************
+        * Nombre: BtInicioSesion_Click
+        * Descripcion: Da o denega el acceso del usuario al panel principal.
+        * Entradas: objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void BtInicioSesion_Click(object sender, EventArgs e)
         {
             // Obtener el nombre de usuario y la contraseña ingresados por el usuario
@@ -67,7 +87,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
-        // Función para verificar las credenciales del usuario en la base de datos
+       /*******************************************************
+       * Nombre: VerificarCredenciales
+       * Descripcion: Función para verificar las credenciales del usuario en la base de datos.
+       * Entradas: objeto (object) en el cual se va realizar el evento 
+       * y el evento a realizar en el (EventArgs).
+       * Salidad: 
+       * *******************************************************/
         private bool VerificarCredenciales(string CorreoUsuario, string contrasena)
         {
             string query = "SELECT COUNT(*) FROM Empleados WHERE Correo = @CorreoUsuario AND contrasena = @contrasena";
@@ -94,6 +120,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /*******************************************************
+        * Nombre: TxCuenta_Enter
+        * Descripcion: Actualiza el texto de un elemento de la ventana.
+        * Entradas: objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void TxCuenta_Enter(object sender, EventArgs e)
         {
             if (TxCorreo.Text == "Correo")
@@ -101,6 +134,14 @@ namespace Gestor_de_hotel_las_karpass
                 TxCorreo.Text = "";
             }
         }
+
+        /*******************************************************
+        * Nombre: TxCuenta_Leave
+        * Descripcion: Actualiza el texto de un elemento de la ventana.
+        * Entradas: objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void TxCuenta_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TxCorreo.Text))
@@ -109,6 +150,13 @@ namespace Gestor_de_hotel_las_karpass
             }
         }
 
+        /*******************************************************
+        * Nombre: TxContrasena_Enter
+        * Descripcion: Actualiza el texto de un elemento de la ventana.
+        * Entradas: objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void TxContrasena_Enter(object sender, EventArgs e)
         {
             if (TxContrasena.Text == "Contraseña")
@@ -117,6 +165,14 @@ namespace Gestor_de_hotel_las_karpass
                 TxContrasena.PasswordChar = '*';
             }
         }
+
+        /*******************************************************
+        * Nombre: TxContrasena_Leave
+        * Descripcion: Actualiza el texto de un elemento de la ventana.
+        * Entradas: objeto (object) en el cual se va realizar el evento 
+        * y el evento a realizar en el (EventArgs).
+        * Salidad: 
+        * *******************************************************/
         private void TxContrasena_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TxContrasena.Text))
